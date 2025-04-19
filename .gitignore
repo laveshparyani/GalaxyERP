@@ -1,0 +1,55 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Frappe specific
+*.log
+*.pot
+*.pyc
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+site/
+sites/
+sites/*/private/
+sites/*/public/
+sites/*/translations/
+sites/*/error-snapshot/
+sites/*/task-logs/
+sites/*/backups/
+sites/*/assets/
+sites/*/node_modules/
+sites/*/package-lock.json
+sites/*/yarn.lock
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db 
