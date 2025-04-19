@@ -44,6 +44,10 @@ sites/*/node_modules/
 sites/*/package-lock.json
 sites/*/yarn.lock
 
+# Redis files
+*.rdb
+redis_queue.rdb
+
 # IDE
 .idea/
 .vscode/
