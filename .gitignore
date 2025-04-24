@@ -56,4 +56,19 @@ redis_queue.rdb
 
 # OS
 .DS_Store
-Thumbs.db 
+Thumbs.db
+
+# Frappe/ERPNext specific
+frappe-bench/apps/*
+!frappe-bench/apps/galaxyerp/
+frappe-bench/archived/
+frappe-bench/config/pids/
+frappe-bench/logs/
+frappe-bench/sites/*/private/
+frappe-bench/sites/*/public/files/
+frappe-bench/sites/*/private/backups/
+frappe-bench/sites/*/private/files/
+
+# Node
+node_modules/
+npm-debug.log 
