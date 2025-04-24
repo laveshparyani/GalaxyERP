@@ -1,0 +1,1096 @@
+2025-04-23 11:14:26,387 ERROR scheduler Exception in Enqueue Events for Site GalaxyERP.com
+Traceback (most recent call last):
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 99, in enqueue_events_for_site
+    if is_scheduler_inactive():
+       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 143, in is_scheduler_inactive
+    if is_scheduler_disabled(verbose=verbose):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 156, in is_scheduler_disabled
+    frappe.db.get_single_value("System Settings", "enable_scheduler")
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/database.py", line 837, in get_single_value
+    ).run()
+      ^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/query_builder/utils.py", line 87, in execute_query
+    result = frappe.db.sql(query, params, *args, **kwargs)  # nosemgrep
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/database.py", line 207, in sql
+    self.connect()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/database.py", line 112, in connect
+    self._conn: "MariadbConnection" | "PostgresConnection" = self.get_connection()
+                                                             ^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/mariadb/database.py", line 107, in get_connection
+    conn = self._get_connection()
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/mariadb/database.py", line 113, in _get_connection
+    return self.create_connection()
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/mariadb/database.py", line 116, in create_connection
+    return pymysql.connect(**self.get_connection_settings())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 361, in __init__
+    self.connect()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 669, in connect
+    self._request_authentication()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 957, in _request_authentication
+    auth_packet = self._read_packet()
+                  ^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 775, in _read_packet
+    packet.raise_for_error()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/protocol.py", line 219, in raise_for_error
+    err.raise_mysql_exception(self._data)
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/err.py", line 150, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.OperationalError: (1045, "Access denied for user 'galaxyerp'@'localhost' (using password: YES)")
+2025-04-23 11:16:16,839 ERROR scheduler Exception in Enqueue Events for Site GalaxyERP.com
+Traceback (most recent call last):
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 99, in enqueue_events_for_site
+    if is_scheduler_inactive():
+       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 143, in is_scheduler_inactive
+    if is_scheduler_disabled(verbose=verbose):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 156, in is_scheduler_disabled
+    frappe.db.get_single_value("System Settings", "enable_scheduler")
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/database.py", line 837, in get_single_value
+    ).run()
+      ^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/query_builder/utils.py", line 87, in execute_query
+    result = frappe.db.sql(query, params, *args, **kwargs)  # nosemgrep
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/database.py", line 207, in sql
+    self.connect()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/database.py", line 112, in connect
+    self._conn: "MariadbConnection" | "PostgresConnection" = self.get_connection()
+                                                             ^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/mariadb/database.py", line 107, in get_connection
+    conn = self._get_connection()
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/mariadb/database.py", line 113, in _get_connection
+    return self.create_connection()
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/mariadb/database.py", line 116, in create_connection
+    return pymysql.connect(**self.get_connection_settings())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 361, in __init__
+    self.connect()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 669, in connect
+    self._request_authentication()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 957, in _request_authentication
+    auth_packet = self._read_packet()
+                  ^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 775, in _read_packet
+    packet.raise_for_error()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/protocol.py", line 219, in raise_for_error
+    err.raise_mysql_exception(self._data)
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/err.py", line 150, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.OperationalError: (1045, "Access denied for user 'galaxyerp'@'localhost' (using password: YES)")
+2025-04-23 11:17:12,142 ERROR scheduler Exception in Enqueue Events for Site GalaxyERP.com
+Traceback (most recent call last):
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 99, in enqueue_events_for_site
+    if is_scheduler_inactive():
+       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 143, in is_scheduler_inactive
+    if is_scheduler_disabled(verbose=verbose):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 156, in is_scheduler_disabled
+    frappe.db.get_single_value("System Settings", "enable_scheduler")
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/database.py", line 837, in get_single_value
+    ).run()
+      ^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/query_builder/utils.py", line 87, in execute_query
+    result = frappe.db.sql(query, params, *args, **kwargs)  # nosemgrep
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/database.py", line 207, in sql
+    self.connect()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/database.py", line 112, in connect
+    self._conn: "MariadbConnection" | "PostgresConnection" = self.get_connection()
+                                                             ^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/mariadb/database.py", line 107, in get_connection
+    conn = self._get_connection()
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/mariadb/database.py", line 113, in _get_connection
+    return self.create_connection()
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/mariadb/database.py", line 116, in create_connection
+    return pymysql.connect(**self.get_connection_settings())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 361, in __init__
+    self.connect()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 669, in connect
+    self._request_authentication()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 957, in _request_authentication
+    auth_packet = self._read_packet()
+                  ^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 775, in _read_packet
+    packet.raise_for_error()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/protocol.py", line 219, in raise_for_error
+    err.raise_mysql_exception(self._data)
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/err.py", line 150, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.OperationalError: (1045, "Access denied for user 'galaxyerp'@'localhost' (using password: YES)")
+2025-04-23 11:18:07,212 ERROR scheduler Exception in Enqueue Events for Site GalaxyERP.com
+Traceback (most recent call last):
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 99, in enqueue_events_for_site
+    if is_scheduler_inactive():
+       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 143, in is_scheduler_inactive
+    if is_scheduler_disabled(verbose=verbose):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 156, in is_scheduler_disabled
+    frappe.db.get_single_value("System Settings", "enable_scheduler")
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/database.py", line 837, in get_single_value
+    ).run()
+      ^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/query_builder/utils.py", line 87, in execute_query
+    result = frappe.db.sql(query, params, *args, **kwargs)  # nosemgrep
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/database.py", line 207, in sql
+    self.connect()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/database.py", line 112, in connect
+    self._conn: "MariadbConnection" | "PostgresConnection" = self.get_connection()
+                                                             ^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/mariadb/database.py", line 107, in get_connection
+    conn = self._get_connection()
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/mariadb/database.py", line 113, in _get_connection
+    return self.create_connection()
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/mariadb/database.py", line 116, in create_connection
+    return pymysql.connect(**self.get_connection_settings())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 361, in __init__
+    self.connect()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 669, in connect
+    self._request_authentication()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 957, in _request_authentication
+    auth_packet = self._read_packet()
+                  ^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 775, in _read_packet
+    packet.raise_for_error()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/protocol.py", line 219, in raise_for_error
+    err.raise_mysql_exception(self._data)
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/err.py", line 150, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.OperationalError: (1045, "Access denied for user 'galaxyerp'@'localhost' (using password: YES)")
+2025-04-23 11:19:02,231 ERROR scheduler Exception in Enqueue Events for Site GalaxyERP.com
+Traceback (most recent call last):
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 99, in enqueue_events_for_site
+    if is_scheduler_inactive():
+       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 143, in is_scheduler_inactive
+    if is_scheduler_disabled(verbose=verbose):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 156, in is_scheduler_disabled
+    frappe.db.get_single_value("System Settings", "enable_scheduler")
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/database.py", line 837, in get_single_value
+    ).run()
+      ^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/query_builder/utils.py", line 87, in execute_query
+    result = frappe.db.sql(query, params, *args, **kwargs)  # nosemgrep
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/database.py", line 207, in sql
+    self.connect()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/database.py", line 112, in connect
+    self._conn: "MariadbConnection" | "PostgresConnection" = self.get_connection()
+                                                             ^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/mariadb/database.py", line 107, in get_connection
+    conn = self._get_connection()
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/mariadb/database.py", line 113, in _get_connection
+    return self.create_connection()
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/mariadb/database.py", line 116, in create_connection
+    return pymysql.connect(**self.get_connection_settings())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 361, in __init__
+    self.connect()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 669, in connect
+    self._request_authentication()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 957, in _request_authentication
+    auth_packet = self._read_packet()
+                  ^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 775, in _read_packet
+    packet.raise_for_error()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/protocol.py", line 219, in raise_for_error
+    err.raise_mysql_exception(self._data)
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/err.py", line 150, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.OperationalError: (1044, "Access denied for user 'galaxyerp'@'localhost' to database 'galaxyerp'")
+2025-04-23 11:19:57,364 ERROR scheduler Exception in Enqueue Events for Site GalaxyERP.com
+Traceback (most recent call last):
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 99, in enqueue_events_for_site
+    if is_scheduler_inactive():
+       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 143, in is_scheduler_inactive
+    if is_scheduler_disabled(verbose=verbose):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 156, in is_scheduler_disabled
+    frappe.db.get_single_value("System Settings", "enable_scheduler")
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/database.py", line 837, in get_single_value
+    ).run()
+      ^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/query_builder/utils.py", line 87, in execute_query
+    result = frappe.db.sql(query, params, *args, **kwargs)  # nosemgrep
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/database.py", line 230, in sql
+    self._cursor.execute(query, values)
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/cursors.py", line 153, in execute
+    result = self._query(query)
+             ^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/cursors.py", line 322, in _query
+    conn.query(q)
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 563, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 825, in _read_query_result
+    result.read()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 1199, in read
+    first_packet = self.connection._read_packet()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 775, in _read_packet
+    packet.raise_for_error()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/protocol.py", line 219, in raise_for_error
+    err.raise_mysql_exception(self._data)
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/err.py", line 150, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.ProgrammingError: (1146, "Table 'galaxyerp.tabSingles' doesn't exist")
+2025-04-23 11:20:52,490 ERROR scheduler Exception in Enqueue Events for Site GalaxyERP.com
+Traceback (most recent call last):
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 99, in enqueue_events_for_site
+    if is_scheduler_inactive():
+       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 143, in is_scheduler_inactive
+    if is_scheduler_disabled(verbose=verbose):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 156, in is_scheduler_disabled
+    frappe.db.get_single_value("System Settings", "enable_scheduler")
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/database.py", line 837, in get_single_value
+    ).run()
+      ^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/query_builder/utils.py", line 87, in execute_query
+    result = frappe.db.sql(query, params, *args, **kwargs)  # nosemgrep
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/database.py", line 230, in sql
+    self._cursor.execute(query, values)
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/cursors.py", line 153, in execute
+    result = self._query(query)
+             ^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/cursors.py", line 322, in _query
+    conn.query(q)
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 563, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 825, in _read_query_result
+    result.read()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 1199, in read
+    first_packet = self.connection._read_packet()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 775, in _read_packet
+    packet.raise_for_error()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/protocol.py", line 219, in raise_for_error
+    err.raise_mysql_exception(self._data)
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/err.py", line 150, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.ProgrammingError: (1146, "Table 'galaxyerp.tabSingles' doesn't exist")
+2025-04-23 11:28:57,009 ERROR scheduler Exception in Enqueue Events for Site GalaxyERP.com
+Traceback (most recent call last):
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 99, in enqueue_events_for_site
+    if is_scheduler_inactive():
+       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 143, in is_scheduler_inactive
+    if is_scheduler_disabled(verbose=verbose):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 156, in is_scheduler_disabled
+    frappe.db.get_single_value("System Settings", "enable_scheduler")
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/database.py", line 837, in get_single_value
+    ).run()
+      ^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/query_builder/utils.py", line 87, in execute_query
+    result = frappe.db.sql(query, params, *args, **kwargs)  # nosemgrep
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/database.py", line 230, in sql
+    self._cursor.execute(query, values)
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/cursors.py", line 153, in execute
+    result = self._query(query)
+             ^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/cursors.py", line 322, in _query
+    conn.query(q)
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 563, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 825, in _read_query_result
+    result.read()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 1199, in read
+    first_packet = self.connection._read_packet()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 775, in _read_packet
+    packet.raise_for_error()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/protocol.py", line 219, in raise_for_error
+    err.raise_mysql_exception(self._data)
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/err.py", line 150, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.ProgrammingError: (1146, "Table 'galaxyerp.tabSingles' doesn't exist")
+2025-04-23 11:30:35,303 ERROR scheduler Exception in Enqueue Events for Site GalaxyERP.com
+Traceback (most recent call last):
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 99, in enqueue_events_for_site
+    if is_scheduler_inactive():
+       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 143, in is_scheduler_inactive
+    if is_scheduler_disabled(verbose=verbose):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 156, in is_scheduler_disabled
+    frappe.db.get_single_value("System Settings", "enable_scheduler")
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/database.py", line 837, in get_single_value
+    ).run()
+      ^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/query_builder/utils.py", line 87, in execute_query
+    result = frappe.db.sql(query, params, *args, **kwargs)  # nosemgrep
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/database.py", line 230, in sql
+    self._cursor.execute(query, values)
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/cursors.py", line 153, in execute
+    result = self._query(query)
+             ^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/cursors.py", line 322, in _query
+    conn.query(q)
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 563, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 825, in _read_query_result
+    result.read()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 1199, in read
+    first_packet = self.connection._read_packet()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 775, in _read_packet
+    packet.raise_for_error()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/protocol.py", line 219, in raise_for_error
+    err.raise_mysql_exception(self._data)
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/err.py", line 150, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.ProgrammingError: (1146, "Table 'galaxyerp.tabSingles' doesn't exist")
+2025-04-23 11:31:30,374 ERROR scheduler Exception in Enqueue Events for Site GalaxyERP.com
+Traceback (most recent call last):
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 99, in enqueue_events_for_site
+    if is_scheduler_inactive():
+       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 143, in is_scheduler_inactive
+    if is_scheduler_disabled(verbose=verbose):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 156, in is_scheduler_disabled
+    frappe.db.get_single_value("System Settings", "enable_scheduler")
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/database.py", line 837, in get_single_value
+    ).run()
+      ^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/query_builder/utils.py", line 87, in execute_query
+    result = frappe.db.sql(query, params, *args, **kwargs)  # nosemgrep
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/database.py", line 230, in sql
+    self._cursor.execute(query, values)
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/cursors.py", line 153, in execute
+    result = self._query(query)
+             ^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/cursors.py", line 322, in _query
+    conn.query(q)
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 563, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 825, in _read_query_result
+    result.read()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 1199, in read
+    first_packet = self.connection._read_packet()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 775, in _read_packet
+    packet.raise_for_error()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/protocol.py", line 219, in raise_for_error
+    err.raise_mysql_exception(self._data)
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/err.py", line 150, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.ProgrammingError: (1146, "Table 'galaxyerp.tabSingles' doesn't exist")
+2025-04-23 11:32:25,418 ERROR scheduler Exception in Enqueue Events for Site GalaxyERP.com
+Traceback (most recent call last):
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 99, in enqueue_events_for_site
+    if is_scheduler_inactive():
+       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 143, in is_scheduler_inactive
+    if is_scheduler_disabled(verbose=verbose):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 156, in is_scheduler_disabled
+    frappe.db.get_single_value("System Settings", "enable_scheduler")
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/database.py", line 837, in get_single_value
+    ).run()
+      ^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/query_builder/utils.py", line 87, in execute_query
+    result = frappe.db.sql(query, params, *args, **kwargs)  # nosemgrep
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/database.py", line 230, in sql
+    self._cursor.execute(query, values)
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/cursors.py", line 153, in execute
+    result = self._query(query)
+             ^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/cursors.py", line 322, in _query
+    conn.query(q)
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 563, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 825, in _read_query_result
+    result.read()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 1199, in read
+    first_packet = self.connection._read_packet()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 775, in _read_packet
+    packet.raise_for_error()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/protocol.py", line 219, in raise_for_error
+    err.raise_mysql_exception(self._data)
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/err.py", line 150, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.ProgrammingError: (1146, "Table 'galaxyerp.tabSingles' doesn't exist")
+2025-04-23 11:33:20,544 ERROR scheduler Exception in Enqueue Events for Site GalaxyERP.com
+Traceback (most recent call last):
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 99, in enqueue_events_for_site
+    if is_scheduler_inactive():
+       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 143, in is_scheduler_inactive
+    if is_scheduler_disabled(verbose=verbose):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 156, in is_scheduler_disabled
+    frappe.db.get_single_value("System Settings", "enable_scheduler")
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/database.py", line 837, in get_single_value
+    ).run()
+      ^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/query_builder/utils.py", line 87, in execute_query
+    result = frappe.db.sql(query, params, *args, **kwargs)  # nosemgrep
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/database.py", line 230, in sql
+    self._cursor.execute(query, values)
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/cursors.py", line 153, in execute
+    result = self._query(query)
+             ^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/cursors.py", line 322, in _query
+    conn.query(q)
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 563, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 825, in _read_query_result
+    result.read()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 1199, in read
+    first_packet = self.connection._read_packet()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/connections.py", line 775, in _read_packet
+    packet.raise_for_error()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/protocol.py", line 219, in raise_for_error
+    err.raise_mysql_exception(self._data)
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/pymysql/err.py", line 150, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.ProgrammingError: (1146, "Table 'galaxyerp.tabSingles' doesn't exist")
+2025-04-23 11:51:49,578 ERROR scheduler Exception in Enqueue Events for Site GalaxyERP.com
+Traceback (most recent call last):
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/connection.py", line 699, in connect
+    sock = self.retry.call_with_retry(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/retry.py", line 46, in call_with_retry
+    return do()
+           ^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/connection.py", line 700, in <lambda>
+    lambda: self._connect(), lambda error: self.disconnect(error)
+            ^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/connection.py", line 1002, in _connect
+    raise err
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/connection.py", line 990, in _connect
+    sock.connect(socket_address)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 102, in enqueue_events_for_site
+    enqueue_events(site=site)
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 122, in enqueue_events
+    if job_type.enqueue():
+       ^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/core/doctype/scheduled_job_type/scheduled_job_type.py", line 73, in enqueue
+    if not self.is_job_in_queue():
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/core/doctype/scheduled_job_type/scheduled_job_type.py", line 94, in is_job_in_queue
+    return is_job_enqueued(self.rq_job_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/background_jobs.py", line 565, in is_job_enqueued
+    return get_job_status(job_id) in (JobStatus.QUEUED, JobStatus.STARTED)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/background_jobs.py", line 570, in get_job_status
+    job = get_job(job_id)
+          ^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/background_jobs.py", line 577, in get_job
+    return Job.fetch(create_job_id(job_id), connection=get_redis_conn())
+                                                       ^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/tenacity/__init__.py", line 289, in wrapped_f
+    return self(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/tenacity/__init__.py", line 379, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/tenacity/__init__.py", line 325, in iter
+    raise retry_exc.reraise()
+          ^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/tenacity/__init__.py", line 158, in reraise
+    raise self.last_attempt.result()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/tenacity/__init__.py", line 382, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/background_jobs.py", line 497, in get_redis_conn
+    return get_redis_connection_without_auth()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/background_jobs.py", line 519, in get_redis_connection_without_auth
+    _redis_queue_conn = RedisQueue.get_connection()
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/redis_queue.py", line 35, in get_connection
+    conn.ping()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/commands/core.py", line 1205, in ping
+    return self.execute_command("PING", **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/client.py", line 1266, in execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/connection.py", line 1457, in get_connection
+    connection.connect()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/connection.py", line 705, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 111 connecting to 127.0.0.1:11000. Connection refused.
+2025-04-23 11:52:50,120 ERROR scheduler Exception in Enqueue Events for Site GalaxyERP.com
+Traceback (most recent call last):
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 99, in enqueue_events_for_site
+    if is_scheduler_inactive():
+       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 143, in is_scheduler_inactive
+    if is_scheduler_disabled(verbose=verbose):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 156, in is_scheduler_disabled
+    frappe.db.get_single_value("System Settings", "enable_scheduler")
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/database/database.py", line 840, in get_single_value
+    df = frappe.get_meta(doctype).get_field(fieldname)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/__init__.py", line 1323, in get_meta
+    return frappe.model.meta.get_meta(doctype, cached=cached)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/model/meta.py", line 70, in get_meta
+    meta = Meta(doctype)
+           ^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/model/meta.py", line 124, in __init__
+    super().__init__("DocType", doctype)
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/model/document.py", line 126, in __init__
+    self.load_from_db()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/model/meta.py", line 130, in load_from_db
+    super().load_from_db()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/model/document.py", line 179, in load_from_db
+    frappe.throw(
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/__init__.py", line 606, in throw
+    msgprint(
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/__init__.py", line 571, in msgprint
+    _raise_exception()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/__init__.py", line 522, in _raise_exception
+    raise exc
+frappe.exceptions.DoesNotExistError: DocType System Settings not found
+2025-04-23 11:58:55,417 ERROR scheduler Exception in Enqueue Events for Site GalaxyERP.com
+Traceback (most recent call last):
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/connection.py", line 699, in connect
+    sock = self.retry.call_with_retry(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/retry.py", line 46, in call_with_retry
+    return do()
+           ^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/connection.py", line 700, in <lambda>
+    lambda: self._connect(), lambda error: self.disconnect(error)
+            ^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/connection.py", line 1002, in _connect
+    raise err
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/connection.py", line 990, in _connect
+    sock.connect(socket_address)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 102, in enqueue_events_for_site
+    enqueue_events(site=site)
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 122, in enqueue_events
+    if job_type.enqueue():
+       ^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/core/doctype/scheduled_job_type/scheduled_job_type.py", line 73, in enqueue
+    if not self.is_job_in_queue():
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/core/doctype/scheduled_job_type/scheduled_job_type.py", line 94, in is_job_in_queue
+    return is_job_enqueued(self.rq_job_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/background_jobs.py", line 565, in is_job_enqueued
+    return get_job_status(job_id) in (JobStatus.QUEUED, JobStatus.STARTED)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/background_jobs.py", line 570, in get_job_status
+    job = get_job(job_id)
+          ^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/background_jobs.py", line 577, in get_job
+    return Job.fetch(create_job_id(job_id), connection=get_redis_conn())
+                                                       ^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/tenacity/__init__.py", line 289, in wrapped_f
+    return self(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/tenacity/__init__.py", line 379, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/tenacity/__init__.py", line 325, in iter
+    raise retry_exc.reraise()
+          ^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/tenacity/__init__.py", line 158, in reraise
+    raise self.last_attempt.result()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/tenacity/__init__.py", line 382, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/background_jobs.py", line 497, in get_redis_conn
+    return get_redis_connection_without_auth()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/background_jobs.py", line 519, in get_redis_connection_without_auth
+    _redis_queue_conn = RedisQueue.get_connection()
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/redis_queue.py", line 35, in get_connection
+    conn.ping()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/commands/core.py", line 1205, in ping
+    return self.execute_command("PING", **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/client.py", line 1266, in execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/connection.py", line 1457, in get_connection
+    connection.connect()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/connection.py", line 705, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 111 connecting to 127.0.0.1:11000. Connection refused.
+2025-04-23 12:01:53,707 ERROR scheduler Skipped queueing frappe.automation.doctype.reminder.reminder.send_reminders because it was found in queue for GalaxyERP.com
+2025-04-23 12:01:53,760 ERROR scheduler Skipped queueing frappe.website.doctype.web_page.web_page.check_publish_status because it was found in queue for GalaxyERP.com
+2025-04-23 12:01:53,805 ERROR scheduler Skipped queueing erpnext.utilities.doctype.video.video.update_youtube_data because it was found in queue for GalaxyERP.com
+2025-04-23 12:01:53,846 ERROR scheduler Skipped queueing erpnext.manufacturing.doctype.bom_update_log.bom_update_log.resume_bom_cost_update_jobs because it was found in queue for GalaxyERP.com
+2025-04-23 12:01:53,881 ERROR scheduler Skipped queueing erpnext.accounts.doctype.gl_entry.gl_entry.rename_gle_sle_docs because it was found in queue for GalaxyERP.com
+2025-04-23 12:01:53,902 ERROR scheduler Skipped queueing frappe.utils.global_search.sync_global_search because it was found in queue for GalaxyERP.com
+2025-04-23 12:01:53,922 ERROR scheduler Skipped queueing frappe.core.doctype.prepared_report.prepared_report.expire_stalled_report because it was found in queue for GalaxyERP.com
+2025-04-23 12:01:53,941 ERROR scheduler Skipped queueing frappe.email.doctype.email_account.email_account.notify_unreplied because it was found in queue for GalaxyERP.com
+2025-04-23 12:01:53,992 ERROR scheduler Skipped queueing frappe.email.queue.flush because it was found in queue for GalaxyERP.com
+2025-04-23 12:02:54,202 ERROR scheduler Skipped queueing erpnext.accounts.doctype.gl_entry.gl_entry.rename_gle_sle_docs because it was found in queue for GalaxyERP.com
+2025-04-23 12:02:54,208 ERROR scheduler Skipped queueing frappe.automation.doctype.reminder.reminder.send_reminders because it was found in queue for GalaxyERP.com
+2025-04-23 12:02:54,225 ERROR scheduler Skipped queueing erpnext.manufacturing.doctype.bom_update_log.bom_update_log.resume_bom_cost_update_jobs because it was found in queue for GalaxyERP.com
+2025-04-23 12:02:54,253 ERROR scheduler Skipped queueing frappe.utils.global_search.sync_global_search because it was found in queue for GalaxyERP.com
+2025-04-23 12:03:54,457 ERROR scheduler Skipped queueing frappe.monitor.flush because it was found in queue for GalaxyERP.com
+2025-04-23 12:03:54,521 ERROR scheduler Skipped queueing erpnext.manufacturing.doctype.bom_update_log.bom_update_log.resume_bom_cost_update_jobs because it was found in queue for GalaxyERP.com
+2025-04-23 12:03:54,536 ERROR scheduler Skipped queueing frappe.integrations.doctype.google_calendar.google_calendar.sync because it was found in queue for GalaxyERP.com
+2025-04-23 12:16:56,835 ERROR scheduler Skipped queueing frappe.email.doctype.email_account.email_account.notify_unreplied because it was found in queue for GalaxyERP.com
+2025-04-23 12:16:56,850 ERROR scheduler Skipped queueing frappe.oauth.delete_oauth2_data because it was found in queue for GalaxyERP.com
+2025-04-23 12:16:56,904 ERROR scheduler Skipped queueing frappe.twofactor.delete_all_barcodes_for_users because it was found in queue for GalaxyERP.com
+2025-04-23 12:31:08,876 ERROR scheduler Skipped queueing frappe.model.utils.link_count.update_link_count because it was found in queue for GalaxyERP.com
+2025-04-23 12:31:08,887 ERROR scheduler Skipped queueing frappe.email.doctype.newsletter.newsletter.send_scheduled_email because it was found in queue for GalaxyERP.com
+2025-04-23 12:31:08,898 ERROR scheduler Skipped queueing frappe.twofactor.delete_all_barcodes_for_users because it was found in queue for GalaxyERP.com
+2025-04-23 12:31:08,903 ERROR scheduler Skipped queueing frappe.oauth.delete_oauth2_data because it was found in queue for GalaxyERP.com
+2025-04-23 12:31:08,917 ERROR scheduler Skipped queueing erpnext.projects.doctype.project.project.project_status_update_reminder because it was found in queue for GalaxyERP.com
+2025-04-23 12:31:08,924 ERROR scheduler Skipped queueing frappe.email.doctype.email_account.email_account.pull because it was found in queue for GalaxyERP.com
+2025-04-23 12:31:08,934 ERROR scheduler Skipped queueing frappe.website.doctype.personal_data_deletion_request.personal_data_deletion_request.process_data_deletion_request because it was found in queue for GalaxyERP.com
+2025-04-23 12:31:08,940 ERROR scheduler Skipped queueing frappe.model.utils.user_settings.sync_user_settings because it was found in queue for GalaxyERP.com
+2025-04-23 12:31:08,947 ERROR scheduler Skipped queueing frappe.utils.global_search.sync_global_search because it was found in queue for GalaxyERP.com
+2025-04-23 12:31:08,952 ERROR scheduler Skipped queueing frappe.desk.page.backups.backups.delete_downloadable_backups because it was found in queue for GalaxyERP.com
+2025-04-23 12:31:08,962 ERROR scheduler Skipped queueing erpnext.projects.doctype.project.project.collect_project_status because it was found in queue for GalaxyERP.com
+2025-04-23 12:31:08,971 ERROR scheduler Skipped queueing frappe.integrations.doctype.google_calendar.google_calendar.sync because it was found in queue for GalaxyERP.com
+2025-04-23 12:31:08,975 ERROR scheduler Skipped queueing frappe.desk.form.document_follow.send_hourly_updates because it was found in queue for GalaxyERP.com
+2025-04-23 12:31:09,000 ERROR scheduler Skipped queueing erpnext.utilities.doctype.video.video.update_youtube_data because it was found in queue for GalaxyERP.com
+2025-04-23 12:31:09,011 ERROR scheduler Skipped queueing erpnext.erpnext_integrations.doctype.plaid_settings.plaid_settings.automatic_synchronization because it was found in queue for GalaxyERP.com
+2025-04-23 12:31:09,017 ERROR scheduler Skipped queueing erpnext.manufacturing.doctype.bom_update_log.bom_update_log.resume_bom_cost_update_jobs because it was found in queue for GalaxyERP.com
+2025-04-23 12:31:09,025 ERROR scheduler Skipped queueing frappe.monitor.flush because it was found in queue for GalaxyERP.com
+2025-04-23 12:32:09,071 ERROR scheduler Skipped queueing frappe.integrations.doctype.google_calendar.google_calendar.sync because it was found in queue for GalaxyERP.com
+2025-04-23 12:32:09,077 ERROR scheduler Skipped queueing frappe.oauth.delete_oauth2_data because it was found in queue for GalaxyERP.com
+2025-04-23 12:32:09,089 ERROR scheduler Skipped queueing erpnext.projects.doctype.project.project.project_status_update_reminder because it was found in queue for GalaxyERP.com
+2025-04-23 12:32:09,099 ERROR scheduler Skipped queueing frappe.desk.form.document_follow.send_hourly_updates because it was found in queue for GalaxyERP.com
+2025-04-23 12:32:09,103 ERROR scheduler Skipped queueing frappe.email.doctype.newsletter.newsletter.send_scheduled_email because it was found in queue for GalaxyERP.com
+2025-04-23 12:32:09,127 ERROR scheduler Skipped queueing erpnext.projects.doctype.project.project.collect_project_status because it was found in queue for GalaxyERP.com
+2025-04-23 12:32:09,151 ERROR scheduler Skipped queueing frappe.desk.page.backups.backups.delete_downloadable_backups because it was found in queue for GalaxyERP.com
+2025-04-23 12:32:09,158 ERROR scheduler Skipped queueing erpnext.erpnext_integrations.doctype.plaid_settings.plaid_settings.automatic_synchronization because it was found in queue for GalaxyERP.com
+2025-04-23 12:32:09,190 ERROR scheduler Skipped queueing frappe.website.doctype.personal_data_deletion_request.personal_data_deletion_request.process_data_deletion_request because it was found in queue for GalaxyERP.com
+2025-04-23 12:33:09,318 ERROR scheduler Skipped queueing frappe.desk.form.document_follow.send_hourly_updates because it was found in queue for GalaxyERP.com
+2025-04-23 12:33:09,338 ERROR scheduler Skipped queueing frappe.website.doctype.personal_data_deletion_request.personal_data_deletion_request.process_data_deletion_request because it was found in queue for GalaxyERP.com
+2025-04-23 12:33:09,341 ERROR scheduler Skipped queueing erpnext.erpnext_integrations.doctype.plaid_settings.plaid_settings.automatic_synchronization because it was found in queue for GalaxyERP.com
+2025-04-23 12:33:09,360 ERROR scheduler Skipped queueing frappe.oauth.delete_oauth2_data because it was found in queue for GalaxyERP.com
+2025-04-23 12:42:41,173 ERROR scheduler Skipped queueing frappe.monitor.flush because it was found in queue for GalaxyERP.com
+2025-04-23 12:49:06,265 ERROR scheduler Skipped queueing frappe.monitor.flush because it was found in queue for GalaxyERP.com
+2025-04-23 12:50:06,365 ERROR scheduler Skipped queueing frappe.monitor.flush because it was found in queue for GalaxyERP.com
+2025-04-23 12:50:06,373 ERROR scheduler Skipped queueing frappe.automation.doctype.reminder.reminder.send_reminders because it was found in queue for GalaxyERP.com
+2025-04-23 12:50:06,393 ERROR scheduler Skipped queueing frappe.email.queue.flush because it was found in queue for GalaxyERP.com
+2025-04-23 12:50:06,398 ERROR scheduler Skipped queueing frappe.deferred_insert.save_to_db because it was found in queue for GalaxyERP.com
+2025-04-23 12:50:06,409 ERROR scheduler Skipped queueing frappe.twofactor.delete_all_barcodes_for_users because it was found in queue for GalaxyERP.com
+2025-04-23 12:50:06,436 ERROR scheduler Skipped queueing frappe.integrations.doctype.google_calendar.google_calendar.sync because it was found in queue for GalaxyERP.com
+2025-04-23 12:51:06,547 ERROR scheduler Skipped queueing frappe.monitor.flush because it was found in queue for GalaxyERP.com
+2025-04-23 12:53:06,350 ERROR scheduler Skipped queueing frappe.monitor.flush because it was found in queue for GalaxyERP.com
+2025-04-23 12:54:06,600 ERROR scheduler Skipped queueing frappe.monitor.flush because it was found in queue for GalaxyERP.com
+2025-04-23 12:55:06,836 ERROR scheduler Skipped queueing frappe.monitor.flush because it was found in queue for GalaxyERP.com
+2025-04-23 12:56:06,952 ERROR scheduler Skipped queueing frappe.monitor.flush because it was found in queue for GalaxyERP.com
+2025-04-23 12:57:07,061 ERROR scheduler Skipped queueing frappe.monitor.flush because it was found in queue for GalaxyERP.com
+2025-04-23 12:58:07,398 ERROR scheduler Skipped queueing frappe.monitor.flush because it was found in queue for GalaxyERP.com
+2025-04-23 12:59:07,592 ERROR scheduler Skipped queueing frappe.monitor.flush because it was found in queue for GalaxyERP.com
+2025-04-23 13:00:08,764 ERROR scheduler Skipped queueing frappe.monitor.flush because it was found in queue for GalaxyERP.com
+2025-04-23 13:01:09,118 ERROR scheduler Skipped queueing erpnext.utilities.doctype.video.video.update_youtube_data because it was found in queue for GalaxyERP.com
+2025-04-23 13:01:09,144 ERROR scheduler Skipped queueing erpnext.accounts.doctype.gl_entry.gl_entry.rename_gle_sle_docs because it was found in queue for GalaxyERP.com
+2025-04-23 13:01:09,172 ERROR scheduler Skipped queueing frappe.monitor.flush because it was found in queue for GalaxyERP.com
+2025-04-23 13:01:09,186 ERROR scheduler Skipped queueing frappe.oauth.delete_oauth2_data because it was found in queue for GalaxyERP.com
+2025-04-23 13:01:09,192 ERROR scheduler Skipped queueing erpnext.manufacturing.doctype.bom_update_log.bom_update_log.resume_bom_cost_update_jobs because it was found in queue for GalaxyERP.com
+2025-04-23 13:01:09,197 ERROR scheduler Skipped queueing frappe.email.doctype.email_account.email_account.notify_unreplied because it was found in queue for GalaxyERP.com
+2025-04-23 13:01:09,253 ERROR scheduler Skipped queueing frappe.utils.global_search.sync_global_search because it was found in queue for GalaxyERP.com
+2025-04-23 13:01:09,271 ERROR scheduler Skipped queueing frappe.website.doctype.web_page.web_page.check_publish_status because it was found in queue for GalaxyERP.com
+2025-04-23 13:02:09,427 ERROR scheduler Skipped queueing frappe.oauth.delete_oauth2_data because it was found in queue for GalaxyERP.com
+2025-04-23 13:02:09,452 ERROR scheduler Skipped queueing erpnext.manufacturing.doctype.bom_update_log.bom_update_log.resume_bom_cost_update_jobs because it was found in queue for GalaxyERP.com
+2025-04-23 13:02:09,509 ERROR scheduler Skipped queueing erpnext.accounts.doctype.gl_entry.gl_entry.rename_gle_sle_docs because it was found in queue for GalaxyERP.com
+2025-04-23 13:02:09,516 ERROR scheduler Skipped queueing frappe.deferred_insert.save_to_db because it was found in queue for GalaxyERP.com
+2025-04-23 13:02:09,668 ERROR scheduler Skipped queueing frappe.website.doctype.web_page.web_page.check_publish_status because it was found in queue for GalaxyERP.com
+2025-04-23 13:03:09,936 ERROR scheduler Skipped queueing frappe.monitor.flush because it was found in queue for GalaxyERP.com
+2025-04-23 13:03:10,039 ERROR scheduler Skipped queueing frappe.email.queue.flush because it was found in queue for GalaxyERP.com
+2025-04-23 13:03:10,089 ERROR scheduler Skipped queueing frappe.integrations.doctype.google_calendar.google_calendar.sync because it was found in queue for GalaxyERP.com
+2025-04-23 13:04:10,475 ERROR scheduler Skipped queueing frappe.integrations.doctype.google_calendar.google_calendar.sync because it was found in queue for GalaxyERP.com
+2025-04-23 13:14:48,096 ERROR scheduler Exception in Enqueue Events for Site GalaxyERP.com
+Traceback (most recent call last):
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/connection.py", line 699, in connect
+    sock = self.retry.call_with_retry(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/retry.py", line 46, in call_with_retry
+    return do()
+           ^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/connection.py", line 700, in <lambda>
+    lambda: self._connect(), lambda error: self.disconnect(error)
+            ^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/connection.py", line 1002, in _connect
+    raise err
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/connection.py", line 990, in _connect
+    sock.connect(socket_address)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 102, in enqueue_events_for_site
+    enqueue_events(site=site)
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 122, in enqueue_events
+    if job_type.enqueue():
+       ^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/core/doctype/scheduled_job_type/scheduled_job_type.py", line 73, in enqueue
+    if not self.is_job_in_queue():
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/core/doctype/scheduled_job_type/scheduled_job_type.py", line 94, in is_job_in_queue
+    return is_job_enqueued(self.rq_job_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/background_jobs.py", line 565, in is_job_enqueued
+    return get_job_status(job_id) in (JobStatus.QUEUED, JobStatus.STARTED)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/background_jobs.py", line 570, in get_job_status
+    job = get_job(job_id)
+          ^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/background_jobs.py", line 577, in get_job
+    return Job.fetch(create_job_id(job_id), connection=get_redis_conn())
+                                                       ^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/tenacity/__init__.py", line 289, in wrapped_f
+    return self(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/tenacity/__init__.py", line 379, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/tenacity/__init__.py", line 325, in iter
+    raise retry_exc.reraise()
+          ^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/tenacity/__init__.py", line 158, in reraise
+    raise self.last_attempt.result()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/tenacity/__init__.py", line 382, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/background_jobs.py", line 497, in get_redis_conn
+    return get_redis_connection_without_auth()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/background_jobs.py", line 519, in get_redis_connection_without_auth
+    _redis_queue_conn = RedisQueue.get_connection()
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/redis_queue.py", line 35, in get_connection
+    conn.ping()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/commands/core.py", line 1205, in ping
+    return self.execute_command("PING", **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/client.py", line 1266, in execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/connection.py", line 1457, in get_connection
+    connection.connect()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/connection.py", line 705, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 111 connecting to 127.0.0.1:11000. Connection refused.
+2025-04-23 13:15:53,498 ERROR scheduler Exception in Enqueue Events for Site GalaxyERP.com
+Traceback (most recent call last):
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/connection.py", line 699, in connect
+    sock = self.retry.call_with_retry(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/retry.py", line 46, in call_with_retry
+    return do()
+           ^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/connection.py", line 700, in <lambda>
+    lambda: self._connect(), lambda error: self.disconnect(error)
+            ^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/connection.py", line 1002, in _connect
+    raise err
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/connection.py", line 990, in _connect
+    sock.connect(socket_address)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 102, in enqueue_events_for_site
+    enqueue_events(site=site)
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 122, in enqueue_events
+    if job_type.enqueue():
+       ^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/core/doctype/scheduled_job_type/scheduled_job_type.py", line 73, in enqueue
+    if not self.is_job_in_queue():
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/core/doctype/scheduled_job_type/scheduled_job_type.py", line 94, in is_job_in_queue
+    return is_job_enqueued(self.rq_job_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/background_jobs.py", line 565, in is_job_enqueued
+    return get_job_status(job_id) in (JobStatus.QUEUED, JobStatus.STARTED)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/background_jobs.py", line 570, in get_job_status
+    job = get_job(job_id)
+          ^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/background_jobs.py", line 577, in get_job
+    return Job.fetch(create_job_id(job_id), connection=get_redis_conn())
+                                                       ^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/tenacity/__init__.py", line 289, in wrapped_f
+    return self(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/tenacity/__init__.py", line 379, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/tenacity/__init__.py", line 325, in iter
+    raise retry_exc.reraise()
+          ^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/tenacity/__init__.py", line 158, in reraise
+    raise self.last_attempt.result()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/tenacity/__init__.py", line 382, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/background_jobs.py", line 497, in get_redis_conn
+    return get_redis_connection_without_auth()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/background_jobs.py", line 519, in get_redis_connection_without_auth
+    _redis_queue_conn = RedisQueue.get_connection()
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/redis_queue.py", line 35, in get_connection
+    conn.ping()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/commands/core.py", line 1205, in ping
+    return self.execute_command("PING", **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/client.py", line 1266, in execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/connection.py", line 1457, in get_connection
+    connection.connect()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/connection.py", line 705, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 111 connecting to 127.0.0.1:11000. Connection refused.
+2025-04-23 13:16:57,754 ERROR scheduler Exception in Enqueue Events for Site GalaxyERP.com
+Traceback (most recent call last):
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/connection.py", line 699, in connect
+    sock = self.retry.call_with_retry(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/retry.py", line 46, in call_with_retry
+    return do()
+           ^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/connection.py", line 700, in <lambda>
+    lambda: self._connect(), lambda error: self.disconnect(error)
+            ^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/connection.py", line 1002, in _connect
+    raise err
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/connection.py", line 990, in _connect
+    sock.connect(socket_address)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 102, in enqueue_events_for_site
+    enqueue_events(site=site)
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/scheduler.py", line 122, in enqueue_events
+    if job_type.enqueue():
+       ^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/core/doctype/scheduled_job_type/scheduled_job_type.py", line 73, in enqueue
+    if not self.is_job_in_queue():
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/core/doctype/scheduled_job_type/scheduled_job_type.py", line 94, in is_job_in_queue
+    return is_job_enqueued(self.rq_job_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/background_jobs.py", line 565, in is_job_enqueued
+    return get_job_status(job_id) in (JobStatus.QUEUED, JobStatus.STARTED)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/background_jobs.py", line 570, in get_job_status
+    job = get_job(job_id)
+          ^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/background_jobs.py", line 577, in get_job
+    return Job.fetch(create_job_id(job_id), connection=get_redis_conn())
+                                                       ^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/tenacity/__init__.py", line 289, in wrapped_f
+    return self(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/tenacity/__init__.py", line 379, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/tenacity/__init__.py", line 325, in iter
+    raise retry_exc.reraise()
+          ^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/tenacity/__init__.py", line 158, in reraise
+    raise self.last_attempt.result()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/tenacity/__init__.py", line 382, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/background_jobs.py", line 497, in get_redis_conn
+    return get_redis_connection_without_auth()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/background_jobs.py", line 519, in get_redis_connection_without_auth
+    _redis_queue_conn = RedisQueue.get_connection()
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/apps/frappe/frappe/utils/redis_queue.py", line 35, in get_connection
+    conn.ping()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/commands/core.py", line 1205, in ping
+    return self.execute_command("PING", **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/client.py", line 1266, in execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/connection.py", line 1457, in get_connection
+    connection.connect()
+  File "/mnt/c/Users/Admin/OneDrive/Desktop/GalaxyERP/frappe-bench/env/lib/python3.12/site-packages/redis/connection.py", line 705, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 111 connecting to 127.0.0.1:11000. Connection refused.
+2025-04-23 13:19:37,503 ERROR scheduler Skipped queueing erpnext.manufacturing.doctype.bom_update_log.bom_update_log.resume_bom_cost_update_jobs because it was found in queue for GalaxyERP.com
+2025-04-23 13:22:38,291 ERROR scheduler Skipped queueing frappe.monitor.flush because it was found in queue for GalaxyERP.com
+2025-04-23 13:23:38,411 ERROR scheduler Skipped queueing frappe.integrations.doctype.google_calendar.google_calendar.sync because it was found in queue for GalaxyERP.com
+2025-04-23 13:23:38,491 ERROR scheduler Skipped queueing frappe.monitor.flush because it was found in queue for GalaxyERP.com
+2025-04-23 13:24:38,739 ERROR scheduler Skipped queueing frappe.monitor.flush because it was found in queue for GalaxyERP.com
+2025-04-23 13:25:38,932 ERROR scheduler Skipped queueing frappe.monitor.flush because it was found in queue for GalaxyERP.com
+2025-04-23 13:26:39,084 ERROR scheduler Skipped queueing frappe.monitor.flush because it was found in queue for GalaxyERP.com
+2025-04-23 13:27:39,236 ERROR scheduler Skipped queueing frappe.monitor.flush because it was found in queue for GalaxyERP.com
+2025-04-23 13:30:21,704 ERROR scheduler Skipped queueing frappe.monitor.flush because it was found in queue for GalaxyERP.com
+2025-04-23 13:30:21,794 ERROR scheduler Skipped queueing frappe.automation.doctype.reminder.reminder.send_reminders because it was found in queue for GalaxyERP.com
+2025-04-23 13:30:21,802 ERROR scheduler Skipped queueing frappe.deferred_insert.save_to_db because it was found in queue for GalaxyERP.com
+2025-04-23 13:31:21,960 ERROR scheduler Skipped queueing frappe.email.doctype.email_account.email_account.notify_unreplied because it was found in queue for GalaxyERP.com
+2025-04-23 13:31:21,968 ERROR scheduler Skipped queueing erpnext.projects.doctype.project.project.project_status_update_reminder because it was found in queue for GalaxyERP.com
+2025-04-23 13:31:21,995 ERROR scheduler Skipped queueing frappe.integrations.doctype.google_calendar.google_calendar.sync because it was found in queue for GalaxyERP.com
+2025-04-23 13:31:22,001 ERROR scheduler Skipped queueing frappe.twofactor.delete_all_barcodes_for_users because it was found in queue for GalaxyERP.com
+2025-04-23 13:31:22,023 ERROR scheduler Skipped queueing frappe.email.doctype.newsletter.newsletter.send_scheduled_email because it was found in queue for GalaxyERP.com
+2025-04-23 13:31:22,029 ERROR scheduler Skipped queueing erpnext.erpnext_integrations.doctype.plaid_settings.plaid_settings.automatic_synchronization because it was found in queue for GalaxyERP.com
+2025-04-23 13:31:22,039 ERROR scheduler Skipped queueing erpnext.projects.doctype.project.project.collect_project_status because it was found in queue for GalaxyERP.com
+2025-04-23 13:31:22,047 ERROR scheduler Skipped queueing frappe.model.utils.link_count.update_link_count because it was found in queue for GalaxyERP.com
+2025-04-23 13:31:22,052 ERROR scheduler Skipped queueing frappe.deferred_insert.save_to_db because it was found in queue for GalaxyERP.com
+2025-04-23 13:31:22,066 ERROR scheduler Skipped queueing frappe.monitor.flush because it was found in queue for GalaxyERP.com
+2025-04-23 13:31:22,085 ERROR scheduler Skipped queueing erpnext.utilities.doctype.video.video.update_youtube_data because it was found in queue for GalaxyERP.com
+2025-04-23 13:31:22,112 ERROR scheduler Skipped queueing frappe.automation.doctype.reminder.reminder.send_reminders because it was found in queue for GalaxyERP.com
+2025-04-23 13:31:22,120 ERROR scheduler Skipped queueing frappe.oauth.delete_oauth2_data because it was found in queue for GalaxyERP.com
+2025-04-23 13:31:22,127 ERROR scheduler Skipped queueing frappe.desk.form.document_follow.send_hourly_updates because it was found in queue for GalaxyERP.com
+2025-04-23 13:31:22,142 ERROR scheduler Skipped queueing frappe.website.doctype.web_page.web_page.check_publish_status because it was found in queue for GalaxyERP.com
+2025-04-23 13:31:22,166 ERROR scheduler Skipped queueing erpnext.manufacturing.doctype.bom_update_log.bom_update_log.resume_bom_cost_update_jobs because it was found in queue for GalaxyERP.com
+2025-04-23 13:32:22,229 ERROR scheduler Skipped queueing erpnext.projects.doctype.project.project.project_status_update_reminder because it was found in queue for GalaxyERP.com
+2025-04-23 13:32:22,234 ERROR scheduler Skipped queueing frappe.oauth.delete_oauth2_data because it was found in queue for GalaxyERP.com
+2025-04-23 13:32:22,243 ERROR scheduler Skipped queueing frappe.email.doctype.email_account.email_account.notify_unreplied because it was found in queue for GalaxyERP.com
+2025-04-23 13:32:22,249 ERROR scheduler Skipped queueing frappe.email.doctype.newsletter.newsletter.send_scheduled_email because it was found in queue for GalaxyERP.com
+2025-04-23 13:32:22,273 ERROR scheduler Skipped queueing frappe.desk.form.document_follow.send_hourly_updates because it was found in queue for GalaxyERP.com
+2025-04-23 13:32:22,282 ERROR scheduler Skipped queueing frappe.deferred_insert.save_to_db because it was found in queue for GalaxyERP.com
+2025-04-23 13:32:22,287 ERROR scheduler Skipped queueing frappe.email.doctype.email_account.email_account.pull because it was found in queue for GalaxyERP.com
+2025-04-23 13:32:22,301 ERROR scheduler Skipped queueing frappe.monitor.flush because it was found in queue for GalaxyERP.com
+2025-04-23 13:32:22,306 ERROR scheduler Skipped queueing frappe.automation.doctype.reminder.reminder.send_reminders because it was found in queue for GalaxyERP.com
+2025-04-23 13:32:22,329 ERROR scheduler Skipped queueing frappe.integrations.doctype.google_calendar.google_calendar.sync because it was found in queue for GalaxyERP.com
+2025-04-23 13:33:22,380 ERROR scheduler Skipped queueing frappe.monitor.flush because it was found in queue for GalaxyERP.com
+2025-04-23 13:33:22,394 ERROR scheduler Skipped queueing frappe.deferred_insert.save_to_db because it was found in queue for GalaxyERP.com
+2025-04-23 13:33:22,422 ERROR scheduler Skipped queueing frappe.automation.doctype.reminder.reminder.send_reminders because it was found in queue for GalaxyERP.com
+2025-04-23 13:34:22,503 ERROR scheduler Skipped queueing frappe.monitor.flush because it was found in queue for GalaxyERP.com
+2025-04-23 13:34:22,593 ERROR scheduler Skipped queueing frappe.automation.doctype.reminder.reminder.send_reminders because it was found in queue for GalaxyERP.com
+2025-04-23 13:34:22,627 ERROR scheduler Skipped queueing frappe.deferred_insert.save_to_db because it was found in queue for GalaxyERP.com
+2025-04-23 13:35:22,713 ERROR scheduler Skipped queueing frappe.automation.doctype.reminder.reminder.send_reminders because it was found in queue for GalaxyERP.com
+2025-04-23 13:35:22,733 ERROR scheduler Skipped queueing frappe.deferred_insert.save_to_db because it was found in queue for GalaxyERP.com
+2025-04-23 13:35:22,741 ERROR scheduler Skipped queueing frappe.monitor.flush because it was found in queue for GalaxyERP.com
+2025-04-23 13:36:22,836 ERROR scheduler Skipped queueing frappe.monitor.flush because it was found in queue for GalaxyERP.com
+2025-04-23 13:36:22,850 ERROR scheduler Skipped queueing frappe.automation.doctype.reminder.reminder.send_reminders because it was found in queue for GalaxyERP.com
+2025-04-23 13:36:22,891 ERROR scheduler Skipped queueing frappe.deferred_insert.save_to_db because it was found in queue for GalaxyERP.com
+2025-04-23 13:37:23,201 ERROR scheduler Skipped queueing frappe.deferred_insert.save_to_db because it was found in queue for GalaxyERP.com
+2025-04-23 13:37:23,231 ERROR scheduler Skipped queueing frappe.automation.doctype.reminder.reminder.send_reminders because it was found in queue for GalaxyERP.com
+2025-04-23 13:37:23,335 ERROR scheduler Skipped queueing frappe.monitor.flush because it was found in queue for GalaxyERP.com
+2025-04-23 13:38:23,466 ERROR scheduler Skipped queueing frappe.automation.doctype.reminder.reminder.send_reminders because it was found in queue for GalaxyERP.com
+2025-04-23 13:38:23,608 ERROR scheduler Skipped queueing frappe.deferred_insert.save_to_db because it was found in queue for GalaxyERP.com
+2025-04-23 13:38:23,625 ERROR scheduler Skipped queueing frappe.monitor.flush because it was found in queue for GalaxyERP.com
+2025-04-23 13:39:23,799 ERROR scheduler Skipped queueing frappe.automation.doctype.reminder.reminder.send_reminders because it was found in queue for GalaxyERP.com
+2025-04-23 13:39:23,842 ERROR scheduler Skipped queueing frappe.deferred_insert.save_to_db because it was found in queue for GalaxyERP.com
+2025-04-23 13:39:23,970 ERROR scheduler Skipped queueing frappe.monitor.flush because it was found in queue for GalaxyERP.com
+2025-04-23 13:40:24,031 ERROR scheduler Skipped queueing frappe.monitor.flush because it was found in queue for GalaxyERP.com
+2025-04-23 13:40:24,042 ERROR scheduler Skipped queueing frappe.automation.doctype.reminder.reminder.send_reminders because it was found in queue for GalaxyERP.com
+2025-04-23 13:40:24,095 ERROR scheduler Skipped queueing frappe.deferred_insert.save_to_db because it was found in queue for GalaxyERP.com
+2025-04-24 05:16:01,911 ERROR scheduler Skipped queueing erpnext.accounts.doctype.process_subscription.process_subscription.create_subscription_process because it was found in queue for GalaxyERP.com
+2025-04-24 05:16:01,922 ERROR scheduler Skipped queueing frappe.model.utils.user_settings.sync_user_settings because it was found in queue for GalaxyERP.com
+2025-04-24 05:16:01,928 ERROR scheduler Skipped queueing erpnext.assets.doctype.asset_maintenance_log.asset_maintenance_log.update_asset_maintenance_log_status because it was found in queue for GalaxyERP.com
+2025-04-24 05:16:01,937 ERROR scheduler Skipped queueing erpnext.manufacturing.doctype.bom_update_tool.bom_update_tool.auto_update_latest_price_in_all_boms because it was found in queue for GalaxyERP.com
+2025-04-24 05:16:01,944 ERROR scheduler Skipped queueing erpnext.setup.doctype.email_digest.email_digest.send because it was found in queue for GalaxyERP.com
+2025-04-24 05:16:01,949 ERROR scheduler Skipped queueing frappe.automation.doctype.auto_repeat.auto_repeat.make_auto_repeat_entry because it was found in queue for GalaxyERP.com
+2025-04-24 05:16:01,955 ERROR scheduler Skipped queueing frappe.automation.doctype.reminder.reminder.send_reminders because it was found in queue for GalaxyERP.com
+2025-04-24 05:16:01,961 ERROR scheduler Skipped queueing frappe.monitor.flush because it was found in queue for GalaxyERP.com
+2025-04-24 05:16:01,967 ERROR scheduler Skipped queueing erpnext.quality_management.doctype.quality_review.quality_review.review because it was found in queue for GalaxyERP.com
+2025-04-24 05:16:01,972 ERROR scheduler Skipped queueing frappe.desk.form.document_follow.send_hourly_updates because it was found in queue for GalaxyERP.com
+2025-04-24 05:16:01,977 ERROR scheduler Skipped queueing frappe.integrations.doctype.dropbox_settings.dropbox_settings.take_backups_daily because it was found in queue for GalaxyERP.com
+2025-04-24 05:16:01,983 ERROR scheduler Skipped queueing frappe.website.doctype.personal_data_deletion_request.personal_data_deletion_request.process_data_deletion_request because it was found in queue for GalaxyERP.com
+2025-04-24 05:16:01,988 ERROR scheduler Skipped queueing erpnext.utilities.bulk_transaction.retry because it was found in queue for GalaxyERP.com
+2025-04-24 05:16:01,994 ERROR scheduler Skipped queueing erpnext.stock.doctype.repost_item_valuation.repost_item_valuation.repost_entries because it was found in queue for GalaxyERP.com
+2025-04-24 05:16:01,999 ERROR scheduler Skipped queueing erpnext.accounts.doctype.fiscal_year.fiscal_year.auto_create_fiscal_year because it was found in queue for GalaxyERP.com
+2025-04-24 05:16:02,005 ERROR scheduler Skipped queueing frappe.email.doctype.notification.notification.trigger_daily_alerts because it was found in queue for GalaxyERP.com
+2025-04-24 05:16:02,010 ERROR scheduler Skipped queueing erpnext.manufacturing.doctype.bom_update_log.bom_update_log.resume_bom_cost_update_jobs because it was found in queue for GalaxyERP.com
+2025-04-24 05:16:02,015 ERROR scheduler Skipped queueing erpnext.projects.doctype.project.project.collect_project_status because it was found in queue for GalaxyERP.com
+2025-04-24 05:16:02,021 ERROR scheduler Skipped queueing erpnext.projects.doctype.task.task.set_tasks_as_overdue because it was found in queue for GalaxyERP.com
+2025-04-24 05:16:02,026 ERROR scheduler Skipped queueing erpnext.projects.doctype.project.project.send_project_status_email_to_users because it was found in queue for GalaxyERP.com
+2025-04-24 05:16:02,031 ERROR scheduler Skipped queueing frappe.integrations.doctype.google_drive.google_drive.daily_backup because it was found in queue for GalaxyERP.com
+2025-04-24 05:16:02,038 ERROR scheduler Skipped queueing frappe.email.queue.flush because it was found in queue for GalaxyERP.com
+2025-04-24 05:16:02,043 ERROR scheduler Skipped queueing frappe.integrations.doctype.google_calendar.google_calendar.sync because it was found in queue for GalaxyERP.com
+2025-04-24 05:16:02,048 ERROR scheduler Skipped queueing erpnext.crm.doctype.opportunity.opportunity.auto_close_opportunity because it was found in queue for GalaxyERP.com
+2025-04-24 05:16:02,054 ERROR scheduler Skipped queueing erpnext.crm.doctype.email_campaign.email_campaign.send_email_to_leads_or_contacts because it was found in queue for GalaxyERP.com
+2025-04-24 05:16:02,059 ERROR scheduler Skipped queueing frappe.core.doctype.prepared_report.prepared_report.expire_stalled_report because it was found in queue for GalaxyERP.com
+2025-04-24 05:16:02,064 ERROR scheduler Skipped queueing erpnext.assets.doctype.asset.asset.update_maintenance_status because it was found in queue for GalaxyERP.com
+2025-04-24 05:16:02,070 ERROR scheduler Skipped queueing frappe.desk.form.document_follow.send_daily_updates because it was found in queue for GalaxyERP.com
+2025-04-24 05:16:02,076 ERROR scheduler Skipped queueing frappe.oauth.delete_oauth2_data because it was found in queue for GalaxyERP.com
+2025-04-24 05:16:02,082 ERROR scheduler Skipped queueing erpnext.projects.doctype.project.project.project_status_update_reminder because it was found in queue for GalaxyERP.com
+2025-04-24 05:16:02,088 ERROR scheduler Skipped queueing erpnext.selling.doctype.quotation.quotation.set_expired_status because it was found in queue for GalaxyERP.com
+2025-04-24 05:16:02,094 ERROR scheduler Skipped queueing frappe.desk.page.backups.backups.delete_downloadable_backups because it was found in queue for GalaxyERP.com
+2025-04-24 05:16:02,098 ERROR scheduler Skipped queueing frappe.utils.global_search.sync_global_search because it was found in queue for GalaxyERP.com
+2025-04-24 05:16:02,107 ERROR scheduler Skipped queueing frappe.email.doctype.email_account.email_account.notify_unreplied because it was found in queue for GalaxyERP.com
+2025-04-24 05:16:02,113 ERROR scheduler Skipped queueing frappe.integrations.doctype.google_contacts.google_contacts.sync because it was found in queue for GalaxyERP.com
+2025-04-24 05:16:02,117 ERROR scheduler Skipped queueing frappe.website.doctype.personal_data_deletion_request.personal_data_deletion_request.remove_unverified_record because it was found in queue for GalaxyERP.com
+2025-04-24 05:16:02,123 ERROR scheduler Skipped queueing erpnext.buying.doctype.supplier_scorecard.supplier_scorecard.refresh_scorecards because it was found in queue for GalaxyERP.com

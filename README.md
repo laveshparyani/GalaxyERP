@@ -61,6 +61,53 @@ bench --site galaxyerp.local install-app galaxyerp
 bench start
 ```
 
+## Customization Guidelines
+
+### Creating Custom App
+To customize GalaxyERP without modifying core files:
+
+1. Create a new custom app:
+```bash
+bench new-app galaxyerp_custom
+bench --site [your-site-name] install-app galaxyerp_custom
+```
+
+2. Directory Structure:
+```
+galaxyerp_custom/
+├── public/
+│   ├── images/
+│   │   └── galaxyerp.png
+│   └── css/
+│       └── galaxyerp.css
+├── translations/
+│   └── en.csv
+├── setup/
+│   └── module_onboarding/
+│       └── home/
+│           └── home.json
+└── hooks.py
+```
+
+### Branding Customization
+- Place custom logo in `public/images/`
+- Update logo path in `hooks.py`
+- Customize text in translation files
+- Override system settings for company branding
+
+### Theme Customization
+- Create custom CSS in `public/css/`
+- Override default styles
+- Update color schemes and branding elements
+
+### Development Best Practices
+1. Never modify core ERPNext files directly
+2. Use custom app for all modifications
+3. Document all customizations
+4. Test thoroughly before deployment
+5. Create backups before major changes
+6. Follow version control best practices
+
 ## Contributing
 Please read CONTRIBUTING.md for details on our code of conduct and the process for submitting pull requests.
 
