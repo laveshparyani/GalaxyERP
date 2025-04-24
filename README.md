@@ -1,8 +1,8 @@
 # GalaxyERP
 
-A powerful cloud-based ERP solution built on Frappe/ERPNext, offering production management, warehouse systems, GST integration, and financial reporting. With 12+ years of experience and 90%+ customer satisfaction, it delivers innovative, scalable solutions for modern businesses.
+A powerful cloud-based ERP solution built on Frappe/ERPNext, designed for modern businesses. GalaxyERP extends ERPNext's capabilities with enhanced features for production management, warehouse systems, and financial operations, with special focus on Indian GST compliance.
 
-## Features
+## Key Features
 - Multiple Production Houses Management
 - Advanced Warehouse Management System
 - Production Process Definition
@@ -21,10 +21,17 @@ A powerful cloud-based ERP solution built on Frappe/ERPNext, offering production
 ## Technology Stack
 - Frappe Framework
 - ERPNext
-- Python
-- MariaDB
+- Python 3.x
+- MariaDB 10.x
+- Redis 6.x
+- Node.js 16.x
+
+## Prerequisites
+- Python 3.x
+- Node.js 16.x or higher
 - Redis
-- Node.js
+- MariaDB/MySQL
+- Git
 
 ## Setup Instructions
 
@@ -50,66 +57,58 @@ cd frappe-bench
 bench new-site galaxyerp.local
 ```
 
-5. Install GalaxyERP:
+5. Install ERPNext (if not already installed):
 ```bash
-bench get-app https://github.com/laveshparyani/GalaxyERP.git
+bench get-app erpnext
+bench --site galaxyerp.local install-app erpnext
+```
+
+6. Install GalaxyERP:
+```bash
+bench get-app galaxyerp
 bench --site galaxyerp.local install-app galaxyerp
 ```
 
-6. Start the development server:
+7. Start the development server:
 ```bash
 bench start
 ```
 
-## Customization Guidelines
+## Configuration
 
-### Creating Custom App
-To customize GalaxyERP without modifying core files:
+### Site Configuration
+1. Set up your site configuration in `sites/galaxyerp.local/site_config.json`
+2. Configure email settings in the ERPNext interface
+3. Set up GST credentials in GalaxyERP settings
 
-1. Create a new custom app:
+### Custom App Development
+To customize GalaxyERP, create a custom app:
 ```bash
 bench new-app galaxyerp_custom
-bench --site [your-site-name] install-app galaxyerp_custom
+bench --site galaxyerp.local install-app galaxyerp_custom
 ```
 
-2. Directory Structure:
-```
-galaxyerp_custom/
-├── public/
-│   ├── images/
-│   │   └── galaxyerp.png
-│   └── css/
-│       └── galaxyerp.css
-├── translations/
-│   └── en.csv
-├── setup/
-│   └── module_onboarding/
-│       └── home/
-│           └── home.json
-└── hooks.py
-```
+## Development Guidelines
 
-### Branding Customization
-- Place custom logo in `public/images/`
-- Update logo path in `hooks.py`
-- Customize text in translation files
-- Override system settings for company branding
-
-### Theme Customization
-- Create custom CSS in `public/css/`
-- Override default styles
-- Update color schemes and branding elements
-
-### Development Best Practices
-1. Never modify core ERPNext files directly
-2. Use custom app for all modifications
-3. Document all customizations
-4. Test thoroughly before deployment
-5. Create backups before major changes
-6. Follow version control best practices
+1. Never modify core ERPNext or GalaxyERP files directly
+2. Use custom apps for all modifications
+3. Follow PEP 8 coding standards for Python
+4. Document all customizations
+5. Write tests for new features
+6. Create backups before major changes
 
 ## Contributing
-Please read CONTRIBUTING.md for details on our code of conduct and the process for submitting pull requests.
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details on how to submit pull requests, report issues, and contribute to the project.
+
+## Support
+- For bugs and feature requests, please create an issue
+- For quick questions, use the discussions section
+- For commercial support, contact our team
 
 ## License
-This project is licensed under the MIT License - see the LICENSE.md file for details. 
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+- ERPNext Community
+- Frappe Framework Team
+- All our contributors and users 
