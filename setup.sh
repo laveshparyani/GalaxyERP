@@ -27,6 +27,15 @@ check_command() {
     fi
 }
 
+# Function to check if running in WSL
+is_wsl() {
+    if [ -f /proc/version ] && grep -q Microsoft /proc/version; then
+        return 0
+    else
+        return 1
+    fi
+}
+
 # Function to check Ubuntu version
 get_ubuntu_version() {
     if [ -f /etc/os-release ]; then
@@ -84,6 +93,24 @@ verify_mariadb() {
     fi
 }
 
+# Function to install pipx and frappe-bench
+install_frappe_bench() {
+    print_message "Installing pipx..." "$YELLOW"
+    if ! command_exists pipx; then
+        sudo apt-get install -y pipx || { print_message "Error installing pipx" "$RED"; return 1; }
+        pipx ensurepath || { print_message "Error ensuring pipx path" "$RED"; return 1; }
+    fi
+
+    print_message "Installing frappe-bench using pipx..." "$YELLOW"
+    pipx install frappe-bench || { print_message "Error installing frappe-bench with pipx" "$RED"; return 1; }
+    
+    # Add pipx to PATH if not already there
+    if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
+        echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+        export PATH="$HOME/.local/bin:$PATH"
+    fi
+}
+
 # Main installation process
 main() {
     print_message "Starting GalaxyERP setup..." "$GREEN"
@@ -93,6 +120,27 @@ main() {
         print_message "Error: Please do not run this script as root" "$RED"
         exit 1
     fi
+    
+    # Check if running in WSL
+    if is_wsl; then
+        print_message "Running in WSL environment..." "$YELLOW"
+    else
+        print_message "Warning: Not running in WSL environment. Some features may not work as expected." "$YELLOW"
+    fi
+    
+    # Install dos2unix if not present
+    if ! command_exists dos2unix; then
+        print_message "Installing dos2unix..." "$YELLOW"
+        sudo apt-get install -y dos2unix || { print_message "Error installing dos2unix" "$RED"; exit 1; }
+    fi
+    
+    # Convert setup and create_site scripts to Unix format
+    print_message "Converting scripts to Unix format..." "$YELLOW"
+    dos2unix setup.sh || { print_message "Error converting setup.sh" "$RED"; exit 1; }
+    dos2unix create_site.sh || { print_message "Error converting create_site.sh" "$RED"; exit 1; }
+    
+    # Make scripts executable
+    chmod +x setup.sh create_site.sh || { print_message "Error making scripts executable" "$RED"; exit 1; }
     
     # Update system
     print_message "Updating system packages..." "$YELLOW"
@@ -148,14 +196,8 @@ default-character-set = utf8mb4" | sudo tee -a /etc/mysql/my.cnf || { print_mess
     print_message "Installing Yarn..." "$YELLOW"
     sudo npm install -g yarn || { print_message "Error installing Yarn" "$RED"; exit 1; }
     
-    # Install frappe-bench
-    print_message "Installing frappe-bench..." "$YELLOW"
-    if ! command_exists pip3; then
-        print_message "Installing pip3..." "$YELLOW"
-        sudo apt-get install -y python3-pip || { print_message "Error installing pip3" "$RED"; exit 1; }
-    fi
-    
-    sudo -H pip3 install frappe-bench || { print_message "Error installing frappe-bench" "$RED"; exit 1; }
+    # Install frappe-bench using pipx
+    install_frappe_bench || { print_message "Error installing frappe-bench" "$RED"; exit 1; }
     
     # Initialize frappe-bench
     print_message "Initializing frappe-bench..." "$YELLOW"
