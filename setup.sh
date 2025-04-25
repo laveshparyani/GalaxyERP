@@ -53,9 +53,9 @@ install_mariadb() {
     
     if [ "$version" = "24.04" ]; then
         print_message "Installing MariaDB for Ubuntu 24.04..." "$YELLOW"
-        sudo apt-get install -y apt-transport-https curl || return 1
-        sudo mkdir -p /etc/apt/keyrings || return 1
-        sudo curl -o /etc/apt/keyrings/mariadb-keyring.pgp 'https://mariadb.org/mariadb_release_signing_key.pgp' || return 1
+        sudo -S apt-get install -y apt-transport-https curl || return 1
+        sudo -S mkdir -p /etc/apt/keyrings || return 1
+        sudo -S curl -o /etc/apt/keyrings/mariadb-keyring.pgp 'https://mariadb.org/mariadb_release_signing_key.pgp' || return 1
         
         # Create MariaDB sources file
         echo "# MariaDB 11.8 repository list - created 2025-04-24 13:42 UTC
@@ -65,17 +65,17 @@ Types: deb
 URIs: https://mirror.bharatdatacenter.com/mariadb/repo/11.8/ubuntu
 Suites: noble
 Components: main main/debug
-Signed-By: /etc/apt/keyrings/mariadb-keyring.pgp" | sudo tee /etc/apt/sources.list.d/mariadb.sources || return 1
+Signed-By: /etc/apt/keyrings/mariadb-keyring.pgp" | sudo -S tee /etc/apt/sources.list.d/mariadb.sources || return 1
         
-        sudo apt-get update || return 1
-        sudo apt-get install -y mariadb-server || return 1
+        sudo -S apt-get update || return 1
+        sudo -S apt-get install -y mariadb-server || return 1
     elif [ "$version" = "20.04" ]; then
         print_message "Installing MariaDB for Ubuntu 20.04..." "$YELLOW"
-        sudo apt-get install -y software-properties-common || return 1
-        sudo apt-key adv --fetch-keys 'https://mariadb.org/mariadb_release_signing_key.asc' || return 1
-        sudo add-apt-repository 'deb [arch=amd64,arm64,ppc64el] https://ftp.icm.edu.pl/pub/unix/database/mariadb/repo/10.3/ubuntu focal main' || return 1
-        sudo apt update || return 1
-        sudo apt install -y mariadb-server || return 1
+        sudo -S apt-get install -y software-properties-common || return 1
+        sudo -S apt-key adv --fetch-keys 'https://mariadb.org/mariadb_release_signing_key.asc' || return 1
+        sudo -S add-apt-repository 'deb [arch=amd64,arm64,ppc64el] https://ftp.icm.edu.pl/pub/unix/database/mariadb/repo/10.3/ubuntu focal main' || return 1
+        sudo -S apt update || return 1
+        sudo -S apt install -y mariadb-server || return 1
     else
         print_message "Unsupported Ubuntu version. Please use Ubuntu 20.04 or 24.04." "$RED"
         exit 1
@@ -97,17 +97,26 @@ verify_mariadb() {
 install_frappe_bench() {
     print_message "Installing pipx..." "$YELLOW"
     if ! command_exists pipx; then
-        sudo apt-get install -y pipx || { print_message "Error installing pipx" "$RED"; return 1; }
+        sudo -S apt-get install -y pipx || { print_message "Error installing pipx" "$RED"; return 1; }
         pipx ensurepath || { print_message "Error ensuring pipx path" "$RED"; return 1; }
+    fi
+
+    # Add pipx to PATH if not already there
+    if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
+        echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+        export PATH="$HOME/.local/bin:$PATH"
+        source ~/.bashrc
     fi
 
     print_message "Installing frappe-bench using pipx..." "$YELLOW"
     pipx install frappe-bench || { print_message "Error installing frappe-bench with pipx" "$RED"; return 1; }
     
-    # Add pipx to PATH if not already there
-    if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
+    # Ensure bench command is available
+    if ! command_exists bench; then
+        print_message "Adding bench to PATH..." "$YELLOW"
         echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
         export PATH="$HOME/.local/bin:$PATH"
+        source ~/.bashrc
     fi
 }
 
@@ -131,7 +140,7 @@ main() {
     # Install dos2unix if not present
     if ! command_exists dos2unix; then
         print_message "Installing dos2unix..." "$YELLOW"
-        sudo apt-get install -y dos2unix || { print_message "Error installing dos2unix" "$RED"; exit 1; }
+        sudo -S apt-get install -y dos2unix || { print_message "Error installing dos2unix" "$RED"; exit 1; }
     fi
     
     # Convert setup and create_site scripts to Unix format
@@ -144,19 +153,19 @@ main() {
     
     # Update system
     print_message "Updating system packages..." "$YELLOW"
-    sudo apt-get update || { print_message "Error updating packages" "$RED"; exit 1; }
-    sudo apt-get upgrade -y || { print_message "Error upgrading packages" "$RED"; exit 1; }
+    sudo -S apt-get update || { print_message "Error updating packages" "$RED"; exit 1; }
+    sudo -S apt-get upgrade -y || { print_message "Error upgrading packages" "$RED"; exit 1; }
     
     # Install basic requirements
     print_message "Installing basic requirements..." "$YELLOW"
-    sudo apt-get install -y git python3-dev python3-setuptools python3-pip virtualenv || { print_message "Error installing basic requirements" "$RED"; exit 1; }
+    sudo -S apt-get install -y git python3-dev python3-setuptools python3-pip virtualenv || { print_message "Error installing basic requirements" "$RED"; exit 1; }
     
     # Install Python venv based on version
     PYTHON_VERSION=$(python3 -V | cut -d' ' -f2 | cut -d'.' -f1,2)
     if [ "$PYTHON_VERSION" = "3.8" ]; then
-        sudo apt install -y python3.8-venv || { print_message "Error installing Python 3.8 venv" "$RED"; exit 1; }
+        sudo -S apt install -y python3.8-venv || { print_message "Error installing Python 3.8 venv" "$RED"; exit 1; }
     elif [ "$PYTHON_VERSION" = "3.10" ]; then
-        sudo apt install -y python3.10-venv || { print_message "Error installing Python 3.10 venv" "$RED"; exit 1; }
+        sudo -S apt install -y python3.10-venv || { print_message "Error installing Python 3.10 venv" "$RED"; exit 1; }
     else
         print_message "Warning: Unsupported Python version $PYTHON_VERSION" "$YELLOW"
     fi
@@ -169,7 +178,7 @@ main() {
     
     # Configure MariaDB
     print_message "Configuring MariaDB..." "$YELLOW"
-    sudo mysql_secure_installation || { print_message "Error configuring MariaDB" "$RED"; exit 1; }
+    sudo -S mysql_secure_installation || { print_message "Error configuring MariaDB" "$RED"; exit 1; }
     
     # Configure MariaDB character set
     echo "[mysqld]
@@ -178,23 +187,23 @@ character-set-server = utf8mb4
 collation-server = utf8mb4_unicode_ci
 
 [mysql]
-default-character-set = utf8mb4" | sudo tee -a /etc/mysql/my.cnf || { print_message "Error configuring MariaDB character set" "$RED"; exit 1; }
+default-character-set = utf8mb4" | sudo -S tee -a /etc/mysql/my.cnf || { print_message "Error configuring MariaDB character set" "$RED"; exit 1; }
     
-    sudo service mysql restart || { print_message "Error restarting MariaDB" "$RED"; exit 1; }
+    sudo -S service mysql restart || { print_message "Error restarting MariaDB" "$RED"; exit 1; }
     
     # Install additional requirements
     print_message "Installing additional requirements..." "$YELLOW"
-    sudo apt-get install -y libmysqlclient-dev redis-server xvfb libfontconfig wkhtmltopdf || { print_message "Error installing additional requirements" "$RED"; exit 1; }
+    sudo -S apt-get install -y libmysqlclient-dev redis-server xvfb libfontconfig wkhtmltopdf || { print_message "Error installing additional requirements" "$RED"; exit 1; }
     
     # Install Node.js
     print_message "Installing Node.js..." "$YELLOW"
-    sudo apt-get install -y curl || { print_message "Error installing curl" "$RED"; exit 1; }
-    curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash - || { print_message "Error setting up Node.js repository" "$RED"; exit 1; }
-    sudo apt-get install -y nodejs || { print_message "Error installing Node.js" "$RED"; exit 1; }
+    sudo -S apt-get install -y curl || { print_message "Error installing curl" "$RED"; exit 1; }
+    curl -sL https://deb.nodesource.com/setup_18.x | sudo -S -E bash - || { print_message "Error setting up Node.js repository" "$RED"; exit 1; }
+    sudo -S apt-get install -y nodejs || { print_message "Error installing Node.js" "$RED"; exit 1; }
     
     # Install Yarn
     print_message "Installing Yarn..." "$YELLOW"
-    sudo npm install -g yarn || { print_message "Error installing Yarn" "$RED"; exit 1; }
+    sudo -S npm install -g yarn || { print_message "Error installing Yarn" "$RED"; exit 1; }
     
     # Install frappe-bench using pipx
     install_frappe_bench || { print_message "Error installing frappe-bench" "$RED"; exit 1; }
@@ -206,10 +215,16 @@ default-character-set = utf8mb4" | sudo tee -a /etc/mysql/my.cnf || { print_mess
     # Change to frappe-bench directory
     cd frappe-bench || { print_message "Error changing to frappe-bench directory" "$RED"; exit 1; }
     
+    # Build assets
+    print_message "Building assets..." "$YELLOW"
+    bench build || { print_message "Error building assets" "$RED"; exit 1; }
+    
     print_message "\nSetup completed successfully!" "$GREEN"
     print_message "\nYou are now in the frappe-bench directory." "$GREEN"
     print_message "\nTo create a new site, run:" "$YELLOW"
     print_message "../create_site.sh" "$NC"
+    print_message "\nTo start the development server, run:" "$YELLOW"
+    print_message "bench start" "$NC"
 }
 
 # Run main function
