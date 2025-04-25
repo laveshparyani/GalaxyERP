@@ -16,13 +16,25 @@ command_exists() {
     command -v "$1" >/dev/null 2>&1
 }
 
+# Function to check if a command succeeded
+check_command() {
+    if [ $? -eq 0 ]; then
+        print_message "$1" "$GREEN"
+        return 0
+    else
+        print_message "$2" "$RED"
+        return 1
+    fi
+}
+
 # Function to check Ubuntu version
 get_ubuntu_version() {
     if [ -f /etc/os-release ]; then
         . /etc/os-release
         echo "$VERSION_ID"
     else
-        echo "0"
+        print_message "Error: Could not determine Ubuntu version" "$RED"
+        exit 1
     fi
 }
 
@@ -32,9 +44,9 @@ install_mariadb() {
     
     if [ "$version" = "24.04" ]; then
         print_message "Installing MariaDB for Ubuntu 24.04..." "$YELLOW"
-        sudo apt-get install apt-transport-https curl
-        sudo mkdir -p /etc/apt/keyrings
-        sudo curl -o /etc/apt/keyrings/mariadb-keyring.pgp 'https://mariadb.org/mariadb_release_signing_key.pgp'
+        sudo apt-get install -y apt-transport-https curl || return 1
+        sudo mkdir -p /etc/apt/keyrings || return 1
+        sudo curl -o /etc/apt/keyrings/mariadb-keyring.pgp 'https://mariadb.org/mariadb_release_signing_key.pgp' || return 1
         
         # Create MariaDB sources file
         echo "# MariaDB 11.8 repository list - created 2025-04-24 13:42 UTC
@@ -44,20 +56,31 @@ Types: deb
 URIs: https://mirror.bharatdatacenter.com/mariadb/repo/11.8/ubuntu
 Suites: noble
 Components: main main/debug
-Signed-By: /etc/apt/keyrings/mariadb-keyring.pgp" | sudo tee /etc/apt/sources.list.d/mariadb.sources
+Signed-By: /etc/apt/keyrings/mariadb-keyring.pgp" | sudo tee /etc/apt/sources.list.d/mariadb.sources || return 1
         
-        sudo apt-get update
-        sudo apt-get install mariadb-server
+        sudo apt-get update || return 1
+        sudo apt-get install -y mariadb-server || return 1
     elif [ "$version" = "20.04" ]; then
         print_message "Installing MariaDB for Ubuntu 20.04..." "$YELLOW"
-        sudo apt-get install software-properties-common
-        sudo apt-key adv --fetch-keys 'https://mariadb.org/mariadb_release_signing_key.asc'
-        sudo add-apt-repository 'deb [arch=amd64,arm64,ppc64el] https://ftp.icm.edu.pl/pub/unix/database/mariadb/repo/10.3/ubuntu focal main'
-        sudo apt update
-        sudo apt install mariadb-server
+        sudo apt-get install -y software-properties-common || return 1
+        sudo apt-key adv --fetch-keys 'https://mariadb.org/mariadb_release_signing_key.asc' || return 1
+        sudo add-apt-repository 'deb [arch=amd64,arm64,ppc64el] https://ftp.icm.edu.pl/pub/unix/database/mariadb/repo/10.3/ubuntu focal main' || return 1
+        sudo apt update || return 1
+        sudo apt install -y mariadb-server || return 1
     else
         print_message "Unsupported Ubuntu version. Please use Ubuntu 20.04 or 24.04." "$RED"
         exit 1
+    fi
+}
+
+# Function to verify MariaDB installation
+verify_mariadb() {
+    if systemctl is-active --quiet mariadb; then
+        print_message "MariaDB is running" "$GREEN"
+        return 0
+    else
+        print_message "Error: MariaDB is not running" "$RED"
+        return 1
     fi
 }
 
@@ -65,29 +88,40 @@ Signed-By: /etc/apt/keyrings/mariadb-keyring.pgp" | sudo tee /etc/apt/sources.li
 main() {
     print_message "Starting GalaxyERP setup..." "$GREEN"
     
+    # Check if running as root
+    if [ "$EUID" -eq 0 ]; then
+        print_message "Error: Please do not run this script as root" "$RED"
+        exit 1
+    fi
+    
     # Update system
     print_message "Updating system packages..." "$YELLOW"
-    sudo apt-get update
-    sudo apt-get upgrade -y
+    sudo apt-get update || { print_message "Error updating packages" "$RED"; exit 1; }
+    sudo apt-get upgrade -y || { print_message "Error upgrading packages" "$RED"; exit 1; }
     
     # Install basic requirements
     print_message "Installing basic requirements..." "$YELLOW"
-    sudo apt-get install -y git python3-dev python3-setuptools python3-pip virtualenv
+    sudo apt-get install -y git python3-dev python3-setuptools python3-pip virtualenv || { print_message "Error installing basic requirements" "$RED"; exit 1; }
     
     # Install Python venv based on version
     PYTHON_VERSION=$(python3 -V | cut -d' ' -f2 | cut -d'.' -f1,2)
     if [ "$PYTHON_VERSION" = "3.8" ]; then
-        sudo apt install -y python3.8-venv
+        sudo apt install -y python3.8-venv || { print_message "Error installing Python 3.8 venv" "$RED"; exit 1; }
     elif [ "$PYTHON_VERSION" = "3.10" ]; then
-        sudo apt install -y python3.10-venv
+        sudo apt install -y python3.10-venv || { print_message "Error installing Python 3.10 venv" "$RED"; exit 1; }
+    else
+        print_message "Warning: Unsupported Python version $PYTHON_VERSION" "$YELLOW"
     fi
     
     # Install MariaDB
-    install_mariadb
+    install_mariadb || { print_message "Error installing MariaDB" "$RED"; exit 1; }
+    
+    # Verify MariaDB installation
+    verify_mariadb || { print_message "Error verifying MariaDB installation" "$RED"; exit 1; }
     
     # Configure MariaDB
     print_message "Configuring MariaDB..." "$YELLOW"
-    sudo mysql_secure_installation
+    sudo mysql_secure_installation || { print_message "Error configuring MariaDB" "$RED"; exit 1; }
     
     # Configure MariaDB character set
     echo "[mysqld]
@@ -96,44 +130,44 @@ character-set-server = utf8mb4
 collation-server = utf8mb4_unicode_ci
 
 [mysql]
-default-character-set = utf8mb4" | sudo tee -a /etc/mysql/my.cnf
+default-character-set = utf8mb4" | sudo tee -a /etc/mysql/my.cnf || { print_message "Error configuring MariaDB character set" "$RED"; exit 1; }
     
-    sudo service mysql restart
+    sudo service mysql restart || { print_message "Error restarting MariaDB" "$RED"; exit 1; }
     
     # Install additional requirements
     print_message "Installing additional requirements..." "$YELLOW"
-    sudo apt-get install -y libmysqlclient-dev redis-server xvfb libfontconfig wkhtmltopdf
+    sudo apt-get install -y libmysqlclient-dev redis-server xvfb libfontconfig wkhtmltopdf || { print_message "Error installing additional requirements" "$RED"; exit 1; }
     
     # Install Node.js
     print_message "Installing Node.js..." "$YELLOW"
-    sudo apt-get install -y curl
-    curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-    sudo apt-get install -y nodejs
+    sudo apt-get install -y curl || { print_message "Error installing curl" "$RED"; exit 1; }
+    curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash - || { print_message "Error setting up Node.js repository" "$RED"; exit 1; }
+    sudo apt-get install -y nodejs || { print_message "Error installing Node.js" "$RED"; exit 1; }
     
     # Install Yarn
     print_message "Installing Yarn..." "$YELLOW"
-    sudo npm install -g yarn
+    sudo npm install -g yarn || { print_message "Error installing Yarn" "$RED"; exit 1; }
     
     # Install frappe-bench
     print_message "Installing frappe-bench..." "$YELLOW"
     if ! command_exists pip3; then
         print_message "Installing pip3..." "$YELLOW"
-        sudo apt-get install -y python3-pip
+        sudo apt-get install -y python3-pip || { print_message "Error installing pip3" "$RED"; exit 1; }
     fi
     
-    sudo -H pip3 install frappe-bench
+    sudo -H pip3 install frappe-bench || { print_message "Error installing frappe-bench" "$RED"; exit 1; }
     
     # Initialize frappe-bench
     print_message "Initializing frappe-bench..." "$YELLOW"
-    bench init frappe-bench --frappe-branch version-15
+    bench init frappe-bench --frappe-branch version-15 || { print_message "Error initializing frappe-bench" "$RED"; exit 1; }
+    
+    # Change to frappe-bench directory
+    cd frappe-bench || { print_message "Error changing to frappe-bench directory" "$RED"; exit 1; }
     
     print_message "\nSetup completed successfully!" "$GREEN"
-    print_message "\nNext steps:" "$YELLOW"
-    print_message "1. cd frappe-bench" "$NC"
-    print_message "2. bench start" "$NC"
-    print_message "3. In a new terminal, run: bench new-site your-site-name" "$NC"
-    print_message "4. bench get-app erpnext --branch version-13" "$NC"
-    print_message "5. bench --site your-site-name install-app erpnext" "$NC"
+    print_message "\nYou are now in the frappe-bench directory." "$GREEN"
+    print_message "\nTo create a new site, run:" "$YELLOW"
+    print_message "../create_site.sh" "$NC"
 }
 
 # Run main function
