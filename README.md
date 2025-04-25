@@ -17,10 +17,10 @@ A powerful cloud-based ERP solution built on Frappe/ERPNext, offering production
 ### Step 2: Clone and Setup
 1. Open Ubuntu WSL terminal
 2. Clone the repository:
-   ```bash
-   git clone https://github.com/laveshparyani/GalaxyERP.git
-   cd GalaxyERP
-   ```
+```bash
+git clone https://github.com/laveshparyani/GalaxyERP.git
+cd GalaxyERP
+```
 3. Make scripts executable:
    ```bash
    # In PowerShell:
@@ -85,12 +85,12 @@ If you encounter any issues with the automated scripts, you can follow these man
    ```
 
 2. Install basic requirements:
-   ```bash
+```bash
    sudo apt-get install git python3-dev python3-setuptools python3-pip virtualenv
-   ```
+```
 
 3. Install Python venv based on your Python version:
-   ```bash
+```bash
    # For Python 3.8
    sudo apt install python3.8-venv
    # For Python 3.10
@@ -115,7 +115,7 @@ If you encounter any issues with the automated scripts, you can follow these man
      sudo apt-get install mariadb-server
      ```
    - For Ubuntu 20.04:
-     ```bash
+```bash
      sudo apt-get install software-properties-common
      sudo apt-key adv --fetch-keys 'https://mariadb.org/mariadb_release_signing_key.asc'
      sudo add-apt-repository 'deb [arch=amd64,arm64,ppc64el] https://ftp.icm.edu.pl/pub/unix/database/mariadb/repo/10.3/ubuntu focal main'
@@ -124,12 +124,12 @@ If you encounter any issues with the automated scripts, you can follow these man
      ```
 
 5. Configure MariaDB:
-   ```bash
+```bash
    sudo mysql_secure_installation
-   ```
+```
 
 6. Configure MariaDB character set:
-   ```bash
+```bash
    echo "[mysqld]
    character-set-client-handshake = FALSE
    character-set-server = utf8mb4
@@ -138,7 +138,7 @@ If you encounter any issues with the automated scripts, you can follow these man
    [mysql]
    default-character-set = utf8mb4" | sudo tee -a /etc/mysql/my.cnf
    sudo service mysql restart
-   ```
+```
 
 7. Install additional requirements:
    ```bash
@@ -146,24 +146,24 @@ If you encounter any issues with the automated scripts, you can follow these man
    ```
 
 8. Install Node.js:
-   ```bash
+```bash
    sudo apt-get install curl
    curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
    sudo apt-get install -y nodejs
-   ```
+```
 
 9. Install Yarn:
-   ```bash
+```bash
    sudo npm install -g yarn
-   ```
+```
 
 10. Install frappe-bench:
-    ```bash
+```bash
     sudo -H pip3 install frappe-bench
-    ```
+```
 
 11. Initialize frappe-bench:
-    ```bash
+```bash
     bench init frappe-bench --frappe-branch version-15
     ```
 
@@ -180,7 +180,7 @@ If you encounter any issues with the automated scripts, you can follow these man
     ```
 
 14. Start the server:
-    ```bash
+```bash
     bench start
     ```
 
