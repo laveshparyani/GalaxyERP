@@ -120,6 +120,37 @@ install_frappe_bench() {
     fi
 }
 
+# Function to install and configure process manager
+install_process_manager() {
+    print_message "Installing and configuring process manager..." "$YELLOW"
+    
+    # Install supervisor if not present
+    if ! command_exists supervisor; then
+        sudo apt-get update
+        sudo apt-get install -y supervisor
+    fi
+    
+    # Create supervisor configuration directory if it doesn't exist
+    sudo mkdir -p /etc/supervisor/conf.d
+    
+    # Configure supervisor for Frappe bench
+    if [ -d "frappe-bench" ]; then
+        cd frappe-bench
+        
+        # Generate supervisor configuration
+        bench setup supervisor --user $USER
+        
+        # Reload supervisor configuration
+        sudo supervisorctl reread
+        sudo supervisorctl update
+        
+        print_message "Process manager configured successfully!" "$GREEN"
+    else
+        print_message "Error: frappe-bench directory not found" "$RED"
+        return 1
+    fi
+}
+
 # Main installation process
 main() {
     print_message "Starting GalaxyERP setup..." "$GREEN"
@@ -218,6 +249,9 @@ default-character-set = utf8mb4" | sudo -S tee -a /etc/mysql/my.cnf || { print_m
     # Build assets
     print_message "Building assets..." "$YELLOW"
     bench build || { print_message "Error building assets" "$RED"; exit 1; }
+    
+    # Install and configure process manager
+    install_process_manager || { print_message "Error configuring process manager" "$RED"; exit 1; }
     
     print_message "\nSetup completed successfully!" "$GREEN"
     print_message "\nYou are now in the frappe-bench directory." "$GREEN"
