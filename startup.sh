@@ -11,8 +11,8 @@ NC='\033[0m' # No Color
 show_menu() {
     clear
     echo -e "${BLUE}=== GalaxyERP Setup Menu ===${NC}"
-    echo -e "${YELLOW}1.${NC} Build Everything from Scratch"
-    echo -e "${YELLOW}2.${NC} Continue with Current GalaxyERP Setup"
+    echo -e "${YELLOW}1.${NC} Fresh Installation (Build Everything from Scratch)"
+    echo -e "${YELLOW}2.${NC} Continue with Existing GalaxyERP"
     echo -e "${YELLOW}3.${NC} Exit"
     echo
     echo -n "Enter your choice (1-3): "
@@ -65,6 +65,43 @@ install_process_manager() {
     fi
 }
 
+# Function to continue with existing GalaxyERP
+continue_with_existing() {
+    echo -e "${BLUE}Setting up existing GalaxyERP...${NC}"
+    
+    # Install required dependencies
+    echo -e "${YELLOW}Installing required dependencies...${NC}"
+    sudo apt-get update
+    sudo apt-get install -y git python3-dev python3-setuptools python3-pip virtualenv libmysqlclient-dev redis-server xvfb libfontconfig wkhtmltopdf
+    
+    # Install Node.js and Yarn
+    echo -e "${YELLOW}Installing Node.js and Yarn...${NC}"
+    sudo apt-get install -y curl
+    curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+    sudo apt-get install -y nodejs
+    sudo npm install -g yarn
+    
+    # Install frappe-bench if not present
+    if ! command -v bench &> /dev/null; then
+        echo -e "${YELLOW}Installing frappe-bench...${NC}"
+        sudo -H pip3 install frappe-bench
+    fi
+    
+    # Configure process manager
+    install_process_manager
+    
+    # Set up GalaxyERP site
+    if [ -d "frappe-bench" ]; then
+        cd frappe-bench
+        echo -e "${YELLOW}Setting up GalaxyERP site...${NC}"
+        bench use GalaxyERP.com
+        bench start
+    else
+        handle_error "frappe-bench directory not found"
+        return 1
+    fi
+}
+
 # Main script
 main() {
     check_wsl
@@ -105,11 +142,12 @@ main() {
                         bench start
                         ;;
                     2)
-                        if [ -f "./create_site.sh" ]; then
-                            chmod +x ./create_site.sh
-                            ./create_site.sh
+                        if [ -f "../create_site.sh" ]; then
+                            chmod +x ../create_site.sh
+                            ../create_site.sh
                         else
                             handle_error "create_site.sh not found"
+                            continue
                         fi
                         ;;
                     *)
@@ -119,14 +157,7 @@ main() {
                 ;;
                 
             2)
-                echo -e "${BLUE}Continuing with current setup...${NC}"
-                if [ -d "frappe-bench" ]; then
-                    cd frappe-bench
-                    install_process_manager
-                    bench start
-                else
-                    handle_error "frappe-bench directory not found"
-                fi
+                continue_with_existing
                 ;;
                 
             3)
