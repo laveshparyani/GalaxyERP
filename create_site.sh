@@ -1,133 +1,118 @@
 #!/bin/bash
 
-# Colors for output
+# Colors for better readability
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-# Function to print colored messages
-print_message() {
-    echo -e "${2}${1}${NC}"
+# Function to handle errors
+handle_error() {
+    echo -e "${RED}Error: $1${NC}"
+    echo -e "${YELLOW}Press Enter to continue...${NC}"
+    read
 }
 
-# Function to check if a command succeeded
-check_command() {
+# Function to list available sites
+list_sites() {
+    echo -e "${BLUE}Available sites:${NC}"
+    bench --site all list
+}
+
+# Function to create a new site
+create_site() {
+    read -p "Enter site name: " site_name
+    if [ -z "$site_name" ]; then
+        handle_error "Site name cannot be empty"
+        return 1
+    fi
+    
+    echo -e "${BLUE}Creating site: $site_name${NC}"
+    bench new-site $site_name
+    
     if [ $? -eq 0 ]; then
-        print_message "$1" "$GREEN"
+        echo -e "${GREEN}Site created successfully!${NC}"
         return 0
     else
-        print_message "$2" "$RED"
+        handle_error "Failed to create site"
         return 1
     fi
 }
 
-# Function to validate site name
-validate_site_name() {
-    local site_name=$1
-    if [[ ! $site_name =~ ^[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]$ ]]; then
-        print_message "Invalid site name. Site name should only contain letters, numbers, and hyphens." "$RED"
+# Function to create and install app
+create_and_install_app() {
+    read -p "Enter app name: " app_name
+    if [ -z "$app_name" ]; then
+        handle_error "App name cannot be empty"
         return 1
     fi
-    return 0
-}
-
-# Function to check if bench is installed
-check_bench() {
-    if ! command -v bench >/dev/null 2>&1; then
-        print_message "Error: bench command not found. Please run setup.sh first." "$RED"
-        exit 1
-    fi
-}
-
-# Function to check if we're in frappe-bench directory
-check_frappe_bench() {
-    if [ ! -d "sites" ]; then
-        print_message "Error: Please run this script from the frappe-bench directory" "$RED"
-        print_message "Run: cd frappe-bench" "$YELLOW"
-        exit 1
-    fi
-}
-
-# Function to check if MariaDB is running
-check_mariadb() {
-    if ! systemctl is-active --quiet mariadb; then
-        print_message "Error: MariaDB is not running" "$RED"
-        print_message "Please start MariaDB: sudo service mysql start" "$YELLOW"
-        exit 1
-    fi
-}
-
-# Function to check if Redis is running
-check_redis() {
-    if ! systemctl is-active --quiet redis-server; then
-        print_message "Error: Redis is not running" "$RED"
-        print_message "Please start Redis: sudo service redis-server start" "$YELLOW"
-        exit 1
-    fi
-}
-
-# Function to create site
-create_site() {
-    local site_name=$1
     
-    print_message "\nCreating site: $site_name" "$YELLOW"
-    bench new-site "$site_name" || { print_message "Error creating site" "$RED"; return 1; }
+    echo -e "${BLUE}Creating app: $app_name${NC}"
+    bench make-app $app_name
     
-    print_message "\nInstalling ERPNext..." "$YELLOW"
-    bench get-app erpnext --branch version-13 || { print_message "Error installing ERPNext" "$RED"; return 1; }
-    
-    print_message "\nInstalling ERPNext on site..." "$YELLOW"
-    bench --site "$site_name" install-app erpnext || { print_message "Error installing ERPNext on site" "$RED"; return 1; }
-    
-    return 0
-}
-
-# Main site creation process
-main() {
-    print_message "GalaxyERP Site Creation Wizard" "$GREEN"
-    print_message "=============================" "$GREEN"
-    
-    # Check prerequisites
-    check_bench
-    check_frappe_bench
-    check_mariadb
-    check_redis
-    
-    # Ask user if they want to create a site
-    while true; do
-        read -p "Do you want to create a new site? (Y/n): " create_site
-        case $create_site in
-            [Yy]* ) break;;
-            [Nn]* ) 
-                print_message "\nNo site will be created. You can run this script again later." "$YELLOW"
-                print_message "You are now in the frappe-bench directory." "$GREEN"
-                print_message "To start the server, run: bench start" "$NC"
-                exit 0;;
-            * ) print_message "Please answer Y or n" "$YELLOW";;
-        esac
-    done
-    
-    # Get site name
-    while true; do
-        read -p "Enter your site name (e.g., mysite.com): " site_name
-        if validate_site_name "$site_name"; then
-            break
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}App created successfully!${NC}"
+        
+        list_sites
+        read -p "Enter site name to install app: " site_name
+        
+        if [ -z "$site_name" ]; then
+            handle_error "Site name cannot be empty"
+            return 1
         fi
-    done
-    
-    # Create site and install ERPNext
-    if create_site "$site_name"; then
-        print_message "\nSite created and ERPNext installed successfully!" "$GREEN"
-        print_message "\nYour site is ready to use!" "$GREEN"
-        print_message "\nTo start your site:" "$YELLOW"
-        print_message "1. Run: bench start" "$NC"
-        print_message "2. Open your browser and go to: http://$site_name:8000" "$NC"
+        
+        echo -e "${BLUE}Installing app on site: $site_name${NC}"
+        bench --site $site_name install-app $app_name
+        
+        if [ $? -eq 0 ]; then
+            echo -e "${GREEN}App installed successfully!${NC}"
+            return 0
+        else
+            handle_error "Failed to install app"
+            return 1
+        fi
     else
-        print_message "\nError: Site creation failed" "$RED"
-        print_message "Please check the error messages above and try again." "$YELLOW"
+        handle_error "Failed to create app"
+        return 1
+    fi
+}
+
+# Main script
+main() {
+    if [ ! -d "frappe-bench" ]; then
+        handle_error "frappe-bench directory not found"
         exit 1
     fi
+    
+    cd frappe-bench
+    
+    echo -e "${BLUE}=== Site Management ===${NC}"
+    echo -e "${YELLOW}1.${NC} Create new site"
+    echo -e "${YELLOW}2.${NC} Create and install app"
+    echo -e "${YELLOW}3.${NC} List available sites"
+    echo -e "${YELLOW}4.${NC} Exit"
+    
+    read -p "Enter your choice (1-4): " choice
+    
+    case $choice in
+        1)
+            create_site
+            ;;
+        2)
+            create_and_install_app
+            ;;
+        3)
+            list_sites
+            ;;
+        4)
+            echo -e "${GREEN}Exiting...${NC}"
+            exit 0
+            ;;
+        *)
+            handle_error "Invalid choice"
+            ;;
+    esac
 }
 
 # Run main function
