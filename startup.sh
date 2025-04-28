@@ -69,36 +69,188 @@ install_process_manager() {
 continue_with_existing() {
     echo -e "${BLUE}Setting up existing GalaxyERP...${NC}"
     
+    # Check if git is installed
+    if ! command -v git &> /dev/null; then
+        handle_error "Git is not installed. Please install git first."
+        return 1
+    fi
+    
+    # Check if we're in a git repository
+    if ! git rev-parse --is-inside-work-tree &> /dev/null; then
+        handle_error "Not in a git repository. Please run this script from your GalaxyERP repository."
+        return 1
+    fi
+    
     # Install required dependencies
     echo -e "${YELLOW}Installing required dependencies...${NC}"
-    sudo apt-get update
-    sudo apt-get install -y git python3-dev python3-setuptools python3-pip virtualenv libmysqlclient-dev redis-server xvfb libfontconfig wkhtmltopdf
+    if ! sudo apt-get update; then
+        handle_error "Failed to update package lists"
+        return 1
+    fi
+    
+    if ! sudo apt-get install -y git python3-dev python3-setuptools python3-pip virtualenv libmysqlclient-dev redis-server xvfb libfontconfig wkhtmltopdf; then
+        handle_error "Failed to install required dependencies"
+        return 1
+    fi
     
     # Install Node.js and Yarn
     echo -e "${YELLOW}Installing Node.js and Yarn...${NC}"
-    sudo apt-get install -y curl
-    curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-    sudo apt-get install -y nodejs
-    sudo npm install -g yarn
+    if ! sudo apt-get install -y curl; then
+        handle_error "Failed to install curl"
+        return 1
+    fi
+    
+    if ! curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -; then
+        handle_error "Failed to setup Node.js repository"
+        return 1
+    fi
+    
+    if ! sudo apt-get install -y nodejs; then
+        handle_error "Failed to install Node.js"
+        return 1
+    fi
+    
+    if ! sudo npm install -g yarn; then
+        handle_error "Failed to install Yarn"
+        return 1
+    fi
     
     # Install frappe-bench if not present
     if ! command -v bench &> /dev/null; then
         echo -e "${YELLOW}Installing frappe-bench...${NC}"
-        sudo -H pip3 install frappe-bench
+        if ! sudo -H pip3 install frappe-bench; then
+            handle_error "Failed to install frappe-bench"
+            return 1
+        fi
+    fi
+    
+    # Pull latest code from GitHub
+    echo -e "${YELLOW}Pulling latest code from GitHub...${NC}"
+    if ! git pull origin master; then
+        handle_error "Failed to pull latest code from GitHub"
+        return 1
+    fi
+    
+    # Initialize frappe-bench if not exists
+    if [ ! -d "frappe-bench" ]; then
+        echo -e "${YELLOW}Initializing frappe-bench...${NC}"
+        if ! bench init frappe-bench --frappe-branch version-15; then
+            handle_error "Failed to initialize frappe-bench"
+            return 1
+        fi
+    fi
+    
+    # Change to frappe-bench directory
+    if ! cd frappe-bench; then
+        handle_error "Failed to change to frappe-bench directory"
+        return 1
+    fi
+    
+    # Pull latest code for frappe and erpnext
+    echo -e "${YELLOW}Pulling latest code for frappe and erpnext...${NC}"
+    if ! bench get-app frappe --branch version-15; then
+        handle_error "Failed to get frappe app"
+        return 1
+    fi
+    
+    if ! bench get-app erpnext --branch version-15; then
+        handle_error "Failed to get erpnext app"
+        return 1
+    fi
+    
+    # Build assets
+    echo -e "${YELLOW}Building assets...${NC}"
+    if ! bench build; then
+        handle_error "Failed to build assets"
+        return 1
+    fi
+    
+    # Check if MariaDB is running
+    if ! systemctl is-active --quiet mariadb; then
+        echo -e "${YELLOW}Starting MariaDB service...${NC}"
+        if ! sudo systemctl start mariadb; then
+            handle_error "Failed to start MariaDB service"
+            return 1
+        fi
+    fi
+    
+    # Configure MariaDB
+    echo -e "${YELLOW}Configuring MariaDB...${NC}"
+    if ! sudo mysql -e "CREATE DATABASE IF NOT EXISTS GalaxyERP;"; then
+        handle_error "Failed to create GalaxyERP database"
+        return 1
+    fi
+    
+    if ! sudo mysql -e "CREATE USER IF NOT EXISTS 'galaxyerp'@'localhost' IDENTIFIED BY 'GalaxyERP@DB';"; then
+        handle_error "Failed to create MariaDB user"
+        return 1
+    fi
+    
+    if ! sudo mysql -e "GRANT ALL PRIVILEGES ON GalaxyERP.* TO 'galaxyerp'@'localhost';"; then
+        handle_error "Failed to grant privileges to MariaDB user"
+        return 1
+    fi
+    
+    if ! sudo mysql -e "FLUSH PRIVILEGES;"; then
+        handle_error "Failed to flush MariaDB privileges"
+        return 1
+    fi
+    
+    # Configure MariaDB character set
+    echo -e "${YELLOW}Configuring MariaDB character set...${NC}"
+    if ! echo "[mysqld]
+character-set-client-handshake = FALSE
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+
+[mysql]
+default-character-set = utf8mb4" | sudo tee -a /etc/mysql/my.cnf; then
+        handle_error "Failed to configure MariaDB character set"
+        return 1
+    fi
+    
+    if ! sudo service mysql restart; then
+        handle_error "Failed to restart MariaDB service"
+        return 1
+    fi
+    
+    # Set up GalaxyERP site
+    echo -e "${YELLOW}Setting up GalaxyERP site...${NC}"
+    if ! bench new-site GalaxyERP.com --mariadb-root-password galaxyerp --admin-password GalaxyERP@Admin; then
+        handle_error "Failed to create new site"
+        return 1
+    fi
+    
+    # Install apps
+    echo -e "${YELLOW}Installing apps...${NC}"
+    if ! bench --site GalaxyERP.com install-app frappe; then
+        handle_error "Failed to install frappe app"
+        return 1
+    fi
+    
+    if ! bench --site GalaxyERP.com install-app erpnext; then
+        handle_error "Failed to install erpnext app"
+        return 1
     fi
     
     # Configure process manager
-    install_process_manager
-    
-    # Set up GalaxyERP site
-    if [ -d "frappe-bench" ]; then
-        cd frappe-bench
-        echo -e "${YELLOW}Setting up GalaxyERP site...${NC}"
-        bench use GalaxyERP.com
-        bench start
-    else
-        handle_error "frappe-bench directory not found"
+    if ! install_process_manager; then
+        handle_error "Failed to configure process manager"
         return 1
+    fi
+    
+    echo -e "${GREEN}Setup completed successfully!${NC}"
+    echo -e "${YELLOW}To start GalaxyERP, run:${NC}"
+    echo -e "bench start"
+    
+    # Start GalaxyERP
+    read -p "Do you want to start GalaxyERP now? (y/N) " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        if ! bench start; then
+            handle_error "Failed to start GalaxyERP"
+            return 1
+        fi
     fi
 }
 
