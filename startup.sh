@@ -98,16 +98,23 @@ install_process_manager() {
         # Create supervisor configuration file
         echo "[program:frappe]
 command=bench start
-directory=/mnt/c/Users/GI03/Desktop/GalaxyERP/frappe-bench
+directory=$(pwd)
 user=$USER
 autostart=true
 autorestart=true
 stderr_logfile=/var/log/supervisor/frappe.err.log
 stdout_logfile=/var/log/supervisor/frappe.out.log" | sudo tee /etc/supervisor/conf.d/frappe.conf
         
+        # Create log directory if it doesn't exist
+        sudo mkdir -p /var/log/supervisor
+        
         # Reload supervisor configuration
         sudo supervisorctl reread
         sudo supervisorctl update
+        
+        # Start supervisor service
+        sudo systemctl start supervisor
+        sudo systemctl enable supervisor
         
         echo -e "${GREEN}Process manager configured successfully!${NC}"
     else
@@ -151,6 +158,13 @@ check_and_init_bench() {
                 handle_error "Failed to get erpnext app"
                 return 1
             fi
+            
+            # Install dependencies
+            bench setup requirements
+            bench setup procfile
+            bench setup supervisor --user $USER
+            bench setup nginx
+            bench setup redis
         else
             echo -e "${YELLOW}Existing frappe-bench found and properly initialized.${NC}"
         fi
@@ -174,6 +188,13 @@ check_and_init_bench() {
             handle_error "Failed to get erpnext app"
             return 1
         fi
+        
+        # Install dependencies
+        bench setup requirements
+        bench setup procfile
+        bench setup supervisor --user $USER
+        bench setup nginx
+        bench setup redis
     fi
     return 0
 }
