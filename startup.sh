@@ -127,7 +127,7 @@ continue_with_existing() {
     # Initialize bench if not already initialized
     if [ ! -f "sites/common_site_config.json" ]; then
         echo -e "${YELLOW}Initializing bench...${NC}"
-        if ! bench init --frappe-branch version-15; then
+        if ! bench init --frappe-branch version-15 .; then
             handle_error "Failed to initialize bench"
             return 1
         fi
