@@ -109,40 +109,46 @@ continue_with_existing() {
         return 1
     fi
     
-    # Initialize frappe-bench if not exists
-    if [ ! -d "frappe-bench" ]; then
-        echo -e "${YELLOW}Initializing frappe-bench...${NC}"
-        if ! bench init frappe-bench --frappe-branch version-15; then
-            handle_error "Failed to initialize frappe-bench"
+    # Check if we're in a bench directory
+    if [ -f "common_site_config.json" ]; then
+        echo -e "${YELLOW}Already in a bench directory, updating apps...${NC}"
+        # Update existing bench
+        if ! bench update; then
+            handle_error "Failed to update bench"
             return 1
         fi
-    fi
-    
-    # Change to frappe-bench directory
-    if ! cd frappe-bench; then
-        handle_error "Failed to change to frappe-bench directory"
-        return 1
-    fi
-    
-    # Initialize bench if not already initialized
-    if [ ! -f "sites/common_site_config.json" ]; then
-        echo -e "${YELLOW}Initializing bench...${NC}"
-        if ! bench init --frappe-branch version-15 .; then
-            handle_error "Failed to initialize bench"
-            return 1
+    else
+        # Check if frappe-bench directory exists
+        if [ -d "frappe-bench" ]; then
+            echo -e "${YELLOW}Found existing frappe-bench directory...${NC}"
+            cd frappe-bench
+            
+            # Update existing bench
+            if ! bench update; then
+                handle_error "Failed to update bench"
+                return 1
+            fi
+        else
+            echo -e "${YELLOW}Initializing new frappe-bench...${NC}"
+            if ! bench init frappe-bench --frappe-branch version-15; then
+                handle_error "Failed to initialize frappe-bench"
+                return 1
+            fi
+            
+            cd frappe-bench
+            
+            # Get frappe and erpnext apps
+            echo -e "${YELLOW}Getting frappe and erpnext apps...${NC}"
+            if ! bench get-app frappe --branch version-15; then
+                handle_error "Failed to get frappe app"
+                return 1
+            fi
+            
+            if ! bench get-app erpnext --branch version-15; then
+                handle_error "Failed to get erpnext app"
+                return 1
+            fi
         fi
-    fi
-    
-    # Pull latest code for frappe and erpnext
-    echo -e "${YELLOW}Pulling latest code for frappe and erpnext...${NC}"
-    if ! bench get-app frappe --branch version-15; then
-        handle_error "Failed to get frappe app"
-        return 1
-    fi
-    
-    if ! bench get-app erpnext --branch version-15; then
-        handle_error "Failed to get erpnext app"
-        return 1
     fi
     
     # Build assets
@@ -201,23 +207,31 @@ default-character-set = utf8mb4" | sudo tee -a /etc/mysql/my.cnf; then
         return 1
     fi
     
-    # Set up GalaxyERP site
-    echo -e "${YELLOW}Setting up GalaxyERP site...${NC}"
-    if ! bench new-site GalaxyERP.com --mariadb-root-password GalaxyERP@DB --admin-password GalaxyERP@Admin; then
-        handle_error "Failed to create new site"
-        return 1
-    fi
-    
-    # Install apps
-    echo -e "${YELLOW}Installing apps...${NC}"
-    if ! bench --site GalaxyERP.com install-app frappe; then
-        handle_error "Failed to install frappe app"
-        return 1
-    fi
-    
-    if ! bench --site GalaxyERP.com install-app erpnext; then
-        handle_error "Failed to install erpnext app"
-        return 1
+    # Check if site exists
+    if ! bench --site GalaxyERP.com list-apps &>/dev/null; then
+        echo -e "${YELLOW}Setting up GalaxyERP site...${NC}"
+        if ! bench new-site GalaxyERP.com --mariadb-root-password GalaxyERP@DB --admin-password GalaxyERP@Admin; then
+            handle_error "Failed to create new site"
+            return 1
+        fi
+        
+        # Install apps
+        echo -e "${YELLOW}Installing apps...${NC}"
+        if ! bench --site GalaxyERP.com install-app frappe; then
+            handle_error "Failed to install frappe app"
+            return 1
+        fi
+        
+        if ! bench --site GalaxyERP.com install-app erpnext; then
+            handle_error "Failed to install erpnext app"
+            return 1
+        fi
+    else
+        echo -e "${YELLOW}Site already exists, updating...${NC}"
+        if ! bench --site GalaxyERP.com update; then
+            handle_error "Failed to update site"
+            return 1
+        fi
     fi
     
     # Configure process manager
