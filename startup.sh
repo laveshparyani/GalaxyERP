@@ -124,6 +124,15 @@ continue_with_existing() {
         return 1
     fi
     
+    # Initialize bench if not already initialized
+    if [ ! -f "sites/common_site_config.json" ]; then
+        echo -e "${YELLOW}Initializing bench...${NC}"
+        if ! bench init --frappe-branch version-15; then
+            handle_error "Failed to initialize bench"
+            return 1
+        fi
+    fi
+    
     # Pull latest code for frappe and erpnext
     echo -e "${YELLOW}Pulling latest code for frappe and erpnext...${NC}"
     if ! bench get-app frappe --branch version-15; then
