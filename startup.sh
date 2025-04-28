@@ -216,7 +216,7 @@ default-character-set = utf8mb4" | sudo tee -a /etc/mysql/my.cnf; then
     
     # Set up GalaxyERP site
     echo -e "${YELLOW}Setting up GalaxyERP site...${NC}"
-    if ! bench new-site GalaxyERP.com --mariadb-root-password galaxyerp --admin-password GalaxyERP@Admin; then
+    if ! bench new-site GalaxyERP.com --mariadb-root-password GalaxyERP@DB --admin-password GalaxyERP@Admin; then
         handle_error "Failed to create new site"
         return 1
     fi
