@@ -65,6 +65,53 @@ install_process_manager() {
     fi
 }
 
+# Function to check and initialize bench
+check_and_init_bench() {
+    if [ -d "frappe-bench" ]; then
+        cd frappe-bench
+        if [ ! -d "apps/frappe" ]; then
+            echo -e "${YELLOW}Initializing frappe-bench...${NC}"
+            if ! bench init . --frappe-branch version-15; then
+                handle_error "Failed to initialize frappe-bench"
+                return 1
+            fi
+            
+            # Get frappe and erpnext apps
+            echo -e "${YELLOW}Getting frappe and erpnext apps...${NC}"
+            if ! bench get-app frappe --branch version-15; then
+                handle_error "Failed to get frappe app"
+                return 1
+            fi
+            
+            if ! bench get-app erpnext --branch version-15; then
+                handle_error "Failed to get erpnext app"
+                return 1
+            fi
+        fi
+    else
+        echo -e "${YELLOW}Initializing new frappe-bench...${NC}"
+        if ! bench init frappe-bench --frappe-branch version-15; then
+            handle_error "Failed to initialize frappe-bench"
+            return 1
+        fi
+        
+        cd frappe-bench
+        
+        # Get frappe and erpnext apps
+        echo -e "${YELLOW}Getting frappe and erpnext apps...${NC}"
+        if ! bench get-app frappe --branch version-15; then
+            handle_error "Failed to get frappe app"
+            return 1
+        fi
+        
+        if ! bench get-app erpnext --branch version-15; then
+            handle_error "Failed to get erpnext app"
+            return 1
+        fi
+    fi
+    return 0
+}
+
 # Function to continue with existing GalaxyERP
 continue_with_existing() {
     echo -e "${BLUE}Setting up existing GalaxyERP...${NC}"
@@ -109,46 +156,9 @@ continue_with_existing() {
         return 1
     fi
     
-    # Check if we're in a bench directory
-    if [ -f "common_site_config.json" ]; then
-        echo -e "${YELLOW}Already in a bench directory, updating apps...${NC}"
-        # Update existing bench
-        if ! bench update; then
-            handle_error "Failed to update bench"
-            return 1
-        fi
-    else
-        # Check if frappe-bench directory exists
-        if [ -d "frappe-bench" ]; then
-            echo -e "${YELLOW}Found existing frappe-bench directory...${NC}"
-            cd frappe-bench
-            
-            # Update existing bench
-            if ! bench update; then
-                handle_error "Failed to update bench"
-                return 1
-            fi
-        else
-            echo -e "${YELLOW}Initializing new frappe-bench...${NC}"
-            if ! bench init frappe-bench --frappe-branch version-15; then
-                handle_error "Failed to initialize frappe-bench"
-                return 1
-            fi
-            
-            cd frappe-bench
-            
-            # Get frappe and erpnext apps
-            echo -e "${YELLOW}Getting frappe and erpnext apps...${NC}"
-            if ! bench get-app frappe --branch version-15; then
-                handle_error "Failed to get frappe app"
-                return 1
-            fi
-            
-            if ! bench get-app erpnext --branch version-15; then
-                handle_error "Failed to get erpnext app"
-                return 1
-            fi
-        fi
+    # Check and initialize bench
+    if ! check_and_init_bench; then
+        return 1
     fi
     
     # Build assets
