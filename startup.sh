@@ -65,16 +65,29 @@ install_process_manager() {
     fi
 }
 
+# Function to clean up existing bench
+cleanup_bench() {
+    if [ -d "frappe-bench" ]; then
+        echo -e "${YELLOW}Cleaning up existing frappe-bench...${NC}"
+        rm -rf frappe-bench
+    fi
+}
+
 # Function to check and initialize bench
 check_and_init_bench() {
     if [ -d "frappe-bench" ]; then
         cd frappe-bench
-        if [ ! -d "apps/frappe" ]; then
-            echo -e "${YELLOW}Initializing frappe-bench...${NC}"
-            if ! bench init . --frappe-branch version-15; then
+        if [ ! -d "apps/frappe" ] || [ ! -f "common_site_config.json" ]; then
+            echo -e "${YELLOW}Existing frappe-bench is not properly initialized. Cleaning up...${NC}"
+            cd ..
+            cleanup_bench
+            echo -e "${YELLOW}Initializing new frappe-bench...${NC}"
+            if ! bench init frappe-bench --frappe-branch version-15; then
                 handle_error "Failed to initialize frappe-bench"
                 return 1
             fi
+            
+            cd frappe-bench
             
             # Get frappe and erpnext apps
             echo -e "${YELLOW}Getting frappe and erpnext apps...${NC}"
@@ -87,6 +100,8 @@ check_and_init_bench() {
                 handle_error "Failed to get erpnext app"
                 return 1
             fi
+        else
+            echo -e "${YELLOW}Existing frappe-bench found and properly initialized.${NC}"
         fi
     else
         echo -e "${YELLOW}Initializing new frappe-bench...${NC}"
