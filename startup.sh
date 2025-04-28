@@ -47,10 +47,17 @@ install_mariadb() {
     
     # Configure MariaDB
     echo -e "${YELLOW}Configuring MariaDB...${NC}"
-    sudo mysql -e "CREATE DATABASE IF NOT EXISTS GalaxyERP;"
-    sudo mysql -e "CREATE USER IF NOT EXISTS 'galaxyerp'@'localhost' IDENTIFIED BY 'GalaxyERP@DB';"
-    sudo mysql -e "GRANT ALL PRIVILEGES ON GalaxyERP.* TO 'galaxyerp'@'localhost';"
+    
+    # Set root password and configure authentication
+    sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'GalaxyERP@DB';"
+    sudo mysql -e "UPDATE mysql.user SET plugin='mysql_native_password' WHERE User='root';"
     sudo mysql -e "FLUSH PRIVILEGES;"
+    
+    # Create database and user
+    sudo mysql -u root -pGalaxyERP@DB -e "CREATE DATABASE IF NOT EXISTS GalaxyERP;"
+    sudo mysql -u root -pGalaxyERP@DB -e "CREATE USER IF NOT EXISTS 'galaxyerp'@'localhost' IDENTIFIED BY 'GalaxyERP@DB';"
+    sudo mysql -u root -pGalaxyERP@DB -e "GRANT ALL PRIVILEGES ON GalaxyERP.* TO 'galaxyerp'@'localhost';"
+    sudo mysql -u root -pGalaxyERP@DB -e "FLUSH PRIVILEGES;"
     
     # Configure MariaDB character set
     echo -e "${YELLOW}Configuring MariaDB character set...${NC}"
@@ -223,7 +230,7 @@ continue_with_existing() {
     # Check if site exists
     if ! bench --site GalaxyERP.com list-apps &>/dev/null; then
         echo -e "${YELLOW}Setting up GalaxyERP site...${NC}"
-        if ! bench new-site GalaxyERP.com --mariadb-root-password GalaxyERP@DB --admin-password GalaxyERP@Admin; then
+        if ! bench new-site GalaxyERP.com --mariadb-root-password GalaxyERP@DB --admin-password GalaxyERP@Admin --db-name GalaxyERP --db-password GalaxyERP@DB; then
             handle_error "Failed to create new site"
             return 1
         fi
