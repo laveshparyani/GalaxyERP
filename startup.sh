@@ -34,6 +34,37 @@ check_wsl() {
     fi
 }
 
+# Function to install MariaDB
+install_mariadb() {
+    echo -e "${YELLOW}Installing MariaDB...${NC}"
+    sudo apt-get update
+    sudo apt-get install -y mariadb-server mariadb-client
+    
+    # Start MariaDB service
+    echo -e "${YELLOW}Starting MariaDB service...${NC}"
+    sudo systemctl start mariadb
+    sudo systemctl enable mariadb
+    
+    # Configure MariaDB
+    echo -e "${YELLOW}Configuring MariaDB...${NC}"
+    sudo mysql -e "CREATE DATABASE IF NOT EXISTS GalaxyERP;"
+    sudo mysql -e "CREATE USER IF NOT EXISTS 'galaxyerp'@'localhost' IDENTIFIED BY 'GalaxyERP@DB';"
+    sudo mysql -e "GRANT ALL PRIVILEGES ON GalaxyERP.* TO 'galaxyerp'@'localhost';"
+    sudo mysql -e "FLUSH PRIVILEGES;"
+    
+    # Configure MariaDB character set
+    echo -e "${YELLOW}Configuring MariaDB character set...${NC}"
+    echo "[mysqld]
+character-set-client-handshake = FALSE
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+
+[mysql]
+default-character-set = utf8mb4" | sudo tee -a /etc/mysql/my.cnf
+    
+    sudo systemctl restart mariadb
+}
+
 # Function to install and configure process manager
 install_process_manager() {
     echo -e "${BLUE}Installing and configuring process manager...${NC}"
@@ -176,59 +207,16 @@ continue_with_existing() {
         return 1
     fi
     
+    # Install MariaDB
+    if ! install_mariadb; then
+        handle_error "Failed to install and configure MariaDB"
+        return 1
+    fi
+    
     # Build assets
     echo -e "${YELLOW}Building assets...${NC}"
     if ! bench build; then
         handle_error "Failed to build assets"
-        return 1
-    fi
-    
-    # Check if MariaDB is running
-    if ! systemctl is-active --quiet mariadb; then
-        echo -e "${YELLOW}Starting MariaDB service...${NC}"
-        if ! sudo systemctl start mariadb; then
-            handle_error "Failed to start MariaDB service"
-            return 1
-        fi
-    fi
-    
-    # Configure MariaDB
-    echo -e "${YELLOW}Configuring MariaDB...${NC}"
-    if ! sudo mysql -e "CREATE DATABASE IF NOT EXISTS GalaxyERP;"; then
-        handle_error "Failed to create GalaxyERP database"
-        return 1
-    fi
-    
-    if ! sudo mysql -e "CREATE USER IF NOT EXISTS 'galaxyerp'@'localhost' IDENTIFIED BY 'GalaxyERP@DB';"; then
-        handle_error "Failed to create MariaDB user"
-        return 1
-    fi
-    
-    if ! sudo mysql -e "GRANT ALL PRIVILEGES ON GalaxyERP.* TO 'galaxyerp'@'localhost';"; then
-        handle_error "Failed to grant privileges to MariaDB user"
-        return 1
-    fi
-    
-    if ! sudo mysql -e "FLUSH PRIVILEGES;"; then
-        handle_error "Failed to flush MariaDB privileges"
-        return 1
-    fi
-    
-    # Configure MariaDB character set
-    echo -e "${YELLOW}Configuring MariaDB character set...${NC}"
-    if ! echo "[mysqld]
-character-set-client-handshake = FALSE
-character-set-server = utf8mb4
-collation-server = utf8mb4_unicode_ci
-
-[mysql]
-default-character-set = utf8mb4" | sudo tee -a /etc/mysql/my.cnf; then
-        handle_error "Failed to configure MariaDB character set"
-        return 1
-    fi
-    
-    if ! sudo service mysql restart; then
-        handle_error "Failed to restart MariaDB service"
         return 1
     fi
     
