@@ -53,6 +53,9 @@ install_mariadb() {
     sudo mysql -e "UPDATE mysql.user SET plugin='mysql_native_password' WHERE User='root';"
     sudo mysql -e "FLUSH PRIVILEGES;"
     
+    # Drop existing database if it exists
+    sudo mysql -u root -pGalaxyERP@DB -e "DROP DATABASE IF EXISTS GalaxyERP;"
+    
     # Create database and user
     sudo mysql -u root -pGalaxyERP@DB -e "CREATE DATABASE IF NOT EXISTS GalaxyERP;"
     sudo mysql -u root -pGalaxyERP@DB -e "CREATE USER IF NOT EXISTS 'galaxyerp'@'localhost' IDENTIFIED BY 'GalaxyERP@DB';"
@@ -91,6 +94,16 @@ install_process_manager() {
         
         # Generate supervisor configuration
         bench setup supervisor --user $USER
+        
+        # Create supervisor configuration file
+        echo "[program:frappe]
+command=bench start
+directory=/mnt/c/Users/GI03/Desktop/GalaxyERP/frappe-bench
+user=$USER
+autostart=true
+autorestart=true
+stderr_logfile=/var/log/supervisor/frappe.err.log
+stdout_logfile=/var/log/supervisor/frappe.out.log" | sudo tee /etc/supervisor/conf.d/frappe.conf
         
         # Reload supervisor configuration
         sudo supervisorctl reread
