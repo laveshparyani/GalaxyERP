@@ -69,59 +69,37 @@ install_process_manager() {
 continue_with_existing() {
     echo -e "${BLUE}Setting up existing GalaxyERP...${NC}"
     
-    # Check if git is installed
-    if ! command -v git &> /dev/null; then
-        handle_error "Git is not installed. Please install git first."
-        return 1
-    fi
-    
-    # Check if we're in a git repository
-    if ! git rev-parse --is-inside-work-tree &> /dev/null; then
-        handle_error "Not in a git repository. Please run this script from your GalaxyERP repository."
-        return 1
-    fi
-    
     # Install required dependencies
     echo -e "${YELLOW}Installing required dependencies...${NC}"
-    if ! sudo apt-get update; then
-        handle_error "Failed to update package lists"
-        return 1
-    fi
+    sudo apt-get update
+    sudo apt-get install -y git python3-dev python3-setuptools python3-pip virtualenv libmysqlclient-dev redis-server xvfb libfontconfig wkhtmltopdf
     
-    if ! sudo apt-get install -y git python3-dev python3-setuptools python3-pip virtualenv libmysqlclient-dev redis-server xvfb libfontconfig wkhtmltopdf; then
-        handle_error "Failed to install required dependencies"
-        return 1
+    # Install pipx if not present
+    if ! command -v pipx &> /dev/null; then
+        echo -e "${YELLOW}Installing pipx...${NC}"
+        sudo apt-get install -y pipx
+        pipx ensurepath
     fi
     
     # Install Node.js and Yarn
     echo -e "${YELLOW}Installing Node.js and Yarn...${NC}"
-    if ! sudo apt-get install -y curl; then
-        handle_error "Failed to install curl"
+    sudo apt-get install -y curl
+    curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+    sudo apt-get install -y nodejs
+    sudo npm install -g yarn
+    
+    # Install frappe-bench using pipx
+    echo -e "${YELLOW}Installing frappe-bench...${NC}"
+    if ! pipx install frappe-bench; then
+        handle_error "Failed to install frappe-bench using pipx"
         return 1
     fi
     
-    if ! curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -; then
-        handle_error "Failed to setup Node.js repository"
-        return 1
-    fi
-    
-    if ! sudo apt-get install -y nodejs; then
-        handle_error "Failed to install Node.js"
-        return 1
-    fi
-    
-    if ! sudo npm install -g yarn; then
-        handle_error "Failed to install Yarn"
-        return 1
-    fi
-    
-    # Install frappe-bench if not present
-    if ! command -v bench &> /dev/null; then
-        echo -e "${YELLOW}Installing frappe-bench...${NC}"
-        if ! sudo -H pip3 install frappe-bench; then
-            handle_error "Failed to install frappe-bench"
-            return 1
-        fi
+    # Add pipx to PATH if not already there
+    if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
+        echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+        export PATH="$HOME/.local/bin:$PATH"
+        source ~/.bashrc
     fi
     
     # Pull latest code from GitHub
