@@ -97,13 +97,13 @@ install_process_manager() {
         
         # Create supervisor configuration file
         echo "[program:frappe]
-command=bench start
-directory=$(pwd)
-user=$USER
-autostart=true
-autorestart=true
-stderr_logfile=/var/log/supervisor/frappe.err.log
-stdout_logfile=/var/log/supervisor/frappe.out.log" | sudo tee /etc/supervisor/conf.d/frappe.conf
+        command=bench start
+        directory=$(pwd)
+        user=$USER
+        autostart=true
+        autorestart=true
+        stderr_logfile=/var/log/supervisor/frappe.err.log
+        stdout_logfile=/var/log/supervisor/frappe.out.log" | sudo tee /etc/supervisor/conf.d/frappe.conf
         
         # Create log directory if it doesn't exist
         sudo mkdir -p /var/log/supervisor
