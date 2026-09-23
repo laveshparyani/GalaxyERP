@@ -25,6 +25,19 @@ handle_error() {
     read
 }
 
+# Ask for the two passwords the setup needs. Never hard-code them: this repo is public.
+# Both can be pre-set in the environment for unattended runs:
+#   MARIADB_ROOT_PASSWORD=... ADMIN_PASSWORD=... ./startup.sh
+prompt_credentials() {
+    while [ -z "$MARIADB_ROOT_PASSWORD" ]; do
+        read -rsp "MariaDB root password to set/use: " MARIADB_ROOT_PASSWORD; echo
+    done
+    while [ -z "$ADMIN_PASSWORD" ]; do
+        read -rsp "Administrator password for the new site: " ADMIN_PASSWORD; echo
+    done
+    export MARIADB_ROOT_PASSWORD ADMIN_PASSWORD
+}
+
 # Function to check if running in WSL
 check_wsl() {
     if ! grep -q Microsoft /proc/version; then
@@ -49,18 +62,19 @@ install_mariadb() {
     echo -e "${YELLOW}Configuring MariaDB...${NC}"
     
     # Set root password and configure authentication
-    sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'GalaxyERP@DB';"
+    prompt_credentials
+    sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${MARIADB_ROOT_PASSWORD}';"
     sudo mysql -e "UPDATE mysql.user SET plugin='mysql_native_password' WHERE User='root';"
     sudo mysql -e "FLUSH PRIVILEGES;"
-    
+
     # Drop existing database if it exists
-    sudo mysql -u root -pGalaxyERP@DB -e "DROP DATABASE IF EXISTS GalaxyERP;"
-    
+    sudo mysql -u root -p"${MARIADB_ROOT_PASSWORD}" -e "DROP DATABASE IF EXISTS GalaxyERP;"
+
     # Create database and user
-    sudo mysql -u root -pGalaxyERP@DB -e "CREATE DATABASE IF NOT EXISTS GalaxyERP;"
-    sudo mysql -u root -pGalaxyERP@DB -e "CREATE USER IF NOT EXISTS 'galaxyerp'@'localhost' IDENTIFIED BY 'GalaxyERP@DB';"
-    sudo mysql -u root -pGalaxyERP@DB -e "GRANT ALL PRIVILEGES ON GalaxyERP.* TO 'galaxyerp'@'localhost';"
-    sudo mysql -u root -pGalaxyERP@DB -e "FLUSH PRIVILEGES;"
+    sudo mysql -u root -p"${MARIADB_ROOT_PASSWORD}" -e "CREATE DATABASE IF NOT EXISTS GalaxyERP;"
+    sudo mysql -u root -p"${MARIADB_ROOT_PASSWORD}" -e "CREATE USER IF NOT EXISTS 'galaxyerp'@'localhost' IDENTIFIED BY '${MARIADB_ROOT_PASSWORD}';"
+    sudo mysql -u root -p"${MARIADB_ROOT_PASSWORD}" -e "GRANT ALL PRIVILEGES ON GalaxyERP.* TO 'galaxyerp'@'localhost';"
+    sudo mysql -u root -p"${MARIADB_ROOT_PASSWORD}" -e "FLUSH PRIVILEGES;"
     
     # Configure MariaDB character set
     echo -e "${YELLOW}Configuring MariaDB character set...${NC}"
@@ -264,18 +278,14 @@ continue_with_existing() {
     # Check if site exists
     if ! bench --site GalaxyERP.com list-apps &>/dev/null; then
         echo -e "${YELLOW}Setting up GalaxyERP site...${NC}"
-        if ! bench new-site GalaxyERP.com --mariadb-root-password GalaxyERP@DB --admin-password GalaxyERP@Admin --db-name GalaxyERP --db-password GalaxyERP@DB; then
+        prompt_credentials
+        if ! bench new-site GalaxyERP.com --mariadb-root-password "${MARIADB_ROOT_PASSWORD}" --admin-password "${ADMIN_PASSWORD}" --db-name GalaxyERP --db-password "${MARIADB_ROOT_PASSWORD}"; then
             handle_error "Failed to create new site"
             return 1
         fi
-        
-        # Install apps
+
+        # Install apps (frappe itself is installed by new-site)
         echo -e "${YELLOW}Installing apps...${NC}"
-        if ! bench --site GalaxyERP.com install-app frappe; then
-            handle_error "Failed to install frappe app"
-            return 1
-        fi
-        
         if ! bench --site GalaxyERP.com install-app erpnext; then
             handle_error "Failed to install erpnext app"
             return 1

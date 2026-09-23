@@ -72,3 +72,8 @@ frappe-bench/sites/*/private/files/
 # Node
 node_modules/
 npm-debug.log 
+# Never commit database dumps, site folders or a bench directory
+*.sql
+*.sql.gz
+frappe-bench/
+removed-from-git/
